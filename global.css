@@ -60,3 +60,17 @@ td > a:hover::before {
 	margin: 0;
 	background-size: 32px;
 }
+
+.table {
+	display: flex;
+	flex-wrap: wrap;
+}
+
+.table > div > div {
+	width: 32px;
+	height: 32px;
+}
+
+.table > div {
+	flex-direction: row; /* Change to column to flip */
+}

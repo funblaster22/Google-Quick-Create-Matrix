@@ -51,7 +51,7 @@ export default function makeTablePrefab() {
  * @param colData {service}
  * @param position {Number[]} row, column
  */
-function makeCell(td, rowData, colData, position) {
+export function makeCell(td, rowData, colData, position) {
   function css(selector, prop, val) {
     for (const item of document.querySelectorAll(selector)) {
       item.style[prop] = val;

@@ -1,13 +1,4 @@
-body {
-    max-width: 300px;
-}
-
-#services > label {
-    display: block;
-    cursor: grab;
-}
-
-.sortable-ghost > img {
+.sortable-ghost > * {
     visibility: hidden;
 }
 
