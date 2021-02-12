@@ -1,0 +1,20 @@
+body {
+    max-width: 300px;
+}
+
+#services > label {
+    display: block;
+    cursor: grab;
+}
+
+.sortable-ghost > img {
+    visibility: hidden;
+}
+
+.col-1 input[type=checkbox], .row-1 input[type=checkbox] {
+    filter: grayscale(1);
+}
+
+.col-1 input[type=checkbox]:checked, .row-1 input[type=checkbox]:checked {
+    filter: grayscale(0);
+}

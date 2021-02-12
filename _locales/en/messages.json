@@ -1,0 +1,60 @@
+{
+  "title": {
+    "message": "Google Docs Quick Create"
+  },
+  "description": {
+    "message": "Create new Documents for Google Drive from your browser bar."
+  },
+  "doc": {
+    "message": "Docs"
+  },
+  "sheet": {
+    "message": "Sheets"
+  },
+  "prez": {
+    "message": "Slides"
+  },
+  "draw": {
+    "message": "Drawings"
+  },
+  "form": {
+    "message": "Forms"
+  },
+  "script": {
+    "message": "App Scripts"
+  },
+  "drive": {
+    "message": "Drive"
+  },
+  "gmail": {
+    "message": "Gmail"
+  },
+  "cal": {
+    "message": "Calendar"
+  },
+  "class": {
+    "message": "Classroom"
+  },
+  "photo": {
+    "message": "Photos"
+  },
+  "signout": {
+    "message": "Sign out of all accounts"
+  },
+  "reset": {
+    "message": "Reset all settings",
+    "description": "Button to restore all settings to default"
+  },
+  "appearance": {
+    "message": "Appearance",
+    "description": "the header for appearance settings"
+  },
+  "account": {
+    "message": "Account",
+    "description": "the header for account settings"
+  },
+  "preview": {
+    "message": "Preview",
+    "description": "the header for the table preview in settings"
+  }
+}

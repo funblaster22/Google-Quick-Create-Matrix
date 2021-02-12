@@ -1,0 +1,29 @@
+{
+  "manifest_version": 3,
+  "name" : "__MSG_title__",
+  "version": "1.0",
+  "description": "__MSG_description__",
+  "default_locale": "en",
+
+  "action": {
+    "default_popup": "index.html",
+    "default_icon": "icons/suite_38.png"
+  },
+  "permissions": [
+    "storage",
+    "identity"
+  ],
+  "oauth2": {
+    "client_id": "139485939671-1ekjjmo072r5capeenek67bvnsl8bit7.apps.googleusercontent.com",
+    "scopes":["https://www.googleapis.com/auth/userinfo.email"]
+  },
+  "options_ui": {
+    "page": "options.html",
+    "open_in_tab": true
+  },
+  "icons": {
+    "128": "icons/suite_128.png",
+    "48": "icons/suite_48.png",
+    "16": "icons/suite_16.png"
+  }
+}

@@ -1,0 +1,62 @@
+body {
+	font-family: Arial, sans-serif;
+	color: #555;
+	margin: 0;
+	background-color: #FDFDFD;
+}
+
+table {
+	border: 1px solid grey;
+	border-collapse: collapse;
+	table-layout: fixed; /* doesn't seem to do anything */
+}
+
+td {
+	/*border: 1px solid black;
+	/* can cause "blips" when moving between cells. Tried adding :hover to td itself, but that displaced the <a>*/
+	min-width: 32px;
+	width: 32px;
+	height: 32px;
+	padding: 0;
+	line-height: 0; /* Responsible for properly setting cell height */
+}
+
+img, a {
+	user-select: none;
+	user-drag: none;
+	-webkit-user-drag: none;
+}
+
+td > a {
+	display: block;
+	width: 100%;
+	height: 100%;
+}
+
+a[href], a[onclick] {
+	cursor: pointer;
+}
+
+td > a:hover::before {
+	display: block;
+	position: relative;
+	content: "";
+	width: 80%;
+	height: 80%;
+	top: 10%;
+	left: 10%;
+	background: lightseagreen;
+}
+
+/*td > img {
+	width: 100%;
+	height: 100%;
+}*/
+
+.col-1 input[type=checkbox], .row-1 input[type=checkbox] {
+	appearance: unset;
+	width: 100%;
+	height: 100%;
+	margin: 0;
+	background-size: 32px;
+}
