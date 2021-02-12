@@ -1,5 +1,4 @@
-//import generateTable from "./Table.js";
-import generateTable from "./FlexTable.js";
+import generateTable from "./Table.js";
 import {default_settings, default_services} from "./defaults.js";
 
 // Adapted from https://stackoverflow.com/a/25612056

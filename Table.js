@@ -113,6 +113,11 @@ export function generateTable(topHeader, sideHeader, {cellGenerator=makeCell, in
     return entries;
   }
 
+  // Clear headers
+  document.getElementById('topHeader').innerHTML = "";
+  document.getElementById('sideHeader').innerHTML = "";
+
+  // Populate table
   const table = document.createElement('table');
   for (let row = -1; row < getSideHeader().length; row++) {
     const tr = document.createElement('tr');
@@ -121,29 +126,32 @@ export function generateTable(topHeader, sideHeader, {cellGenerator=makeCell, in
       tr.classList.add('row' + row);
       td.classList.add('col' + col);
       if (row === -1 ^ col === -1) { // XOR to skip corner (only executes if one is true, but not both)
-        //const img = document.createElement('img');
+        // Create container so that the image can be grayscaled, without affecting background when hovering
+        const container = document.createElement('span');
         const checkbox = document.createElement('input');
         checkbox.type = "checkbox";
+        container.style.display = 'inline-block';
         if (row === -1 && col > -1) {
           checkbox.style.backgroundImage = 'url("' + getTopHeader(col)[0] + '")';
           checkbox.name = getTopHeader(col)[1].id;
           checkbox.title = chrome.i18n.getMessage(getTopHeader(col)[1].id || "");
-          //img.src = getTopHeader(col)[0];
-          //img.title = getTopHeader(col)[1].name;
+          container.appendChild(checkbox);
+          document.getElementById('topHeader').appendChild(container);
         }
         else if (row > -1 && col === -1) {
           checkbox.style.backgroundImage = 'url("' + getSideHeader(row)[0] + '")';
           checkbox.name = getSideHeader(row)[1].id;
           checkbox.title = getSideHeader(row)[1].name;
-          //img.src = getSideHeader(row)[0];
-          //img.title = getSideHeader(row)[1].name;
+          container.appendChild(checkbox);
+          document.getElementById('sideHeader').appendChild(container);
         }
-        td.appendChild(checkbox);
+        container.classList.add(...td.classList, tr.classList);
+        continue;
       }
       else if (row > -1 && col > -1) {
         td.classList.add("cell");
         cellGenerator(td, Object.values(sideHeader)[invert ? col : row], Object.values(topHeader)[invert ? row : col], [row, col]);
-      }
+      } else continue;
 
       tr.appendChild(td);
     }

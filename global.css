@@ -6,7 +6,6 @@ body {
 }
 
 table {
-	border: 1px solid grey;
 	border-collapse: collapse;
 	table-layout: fixed; /* doesn't seem to do anything */
 }
@@ -18,7 +17,6 @@ td {
 	width: 32px;
 	height: 32px;
 	padding: 0;
-	line-height: 0; /* Responsible for properly setting cell height */
 }
 
 img, a {
@@ -48,29 +46,29 @@ td > a:hover::before {
 	background: lightseagreen;
 }
 
-/*td > img {
-	width: 100%;
-	height: 100%;
-}*/
-
 .col-1 input[type=checkbox], .row-1 input[type=checkbox] {
 	appearance: unset;
-	width: 100%;
-	height: 100%;
+	width: 32px;
+	height: 32px;
 	margin: 0;
 	background-size: 32px;
 }
 
-.table {
-	display: flex;
-	flex-wrap: wrap;
+.grid-container {
+	display: grid;
+	grid-template-columns: 32px 1fr;
+	grid-template-rows: 32px 1fr;
+	gap: 0 0;
+	grid-template-areas:
+    ". topHeader"
+    "sideHeader body";
+	border: 1px solid grey;
+	line-height: 0; /* Responsible for properly setting cell height */
+	width: fit-content;
 }
 
-.table > div > div {
-	width: 32px;
-	height: 32px;
-}
+#sideHeader { grid-area: sideHeader; }
 
-.table > div {
-	flex-direction: row; /* Change to column to flip */
-}
+#topHeader { grid-area: topHeader; }
+
+#table { grid-area: body; }

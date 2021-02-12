@@ -53,8 +53,8 @@
     "message": "Account",
     "description": "the header for account settings"
   },
-  "preview": {
-    "message": "Preview",
-    "description": "the header for the table preview in settings"
+  "edit": {
+    "message": "Edit",
+    "description": "the header for the table preview/editing in settings"
   }
 }
