@@ -5,13 +5,26 @@ localizeHtmlPage();
 
 let settings;
 function makeTablePreview() {
-  generateTable().then(() => {
+  generateTable(true).then(() => {
     // Remove links from table
     for (const link of document.getElementsByTagName('a'))
       link.removeAttribute('href');
 
     // Make icons draggable
     new Sortable(document.getElementsByClassName('row-1')[0], {
+      animation: 150,
+      ghostClass: "sortable-ghost", //somehow find a way to not show icon without being weird
+      onEnd: () => {
+        const services = [];
+        for (const checkbox of document.querySelectorAll('#topHeader input[type=checkbox]')) {
+          services.push(checkbox.name);
+        }
+        chrome.storage.sync.set({services: services}, makeTablePreview);
+      }
+    });
+
+    // Make user icons draggable
+    new Sortable(document.getElementById('sideHeader'), {
       animation: 150,
       ghostClass: "sortable-ghost", //somehow find a way to not show icon without being weird
       onMove: () => {
@@ -22,9 +35,14 @@ function makeTablePreview() {
         chrome.storage.sync.set({services: services}, makeTablePreview);*/
       }
     });
+
+    // Add event listeners to radio buttons
+    for (const input of document.getElementsByTagName('input')) {
+      input.onchange = updateSettings;
+      input.checked = settings[input.name];
+    }
   });
 }
-makeTablePreview();
 
 
 function updateSettings(ev) {
@@ -51,11 +69,7 @@ chrome.storage.sync.get(['settings', 'services'], storage => {
     document.getElementById('services').appendChild(label);
   }*/
 
-  // Add event listeners to radio buttons
-  for (const input of document.getElementsByTagName('input')) {
-    input.onchange = updateSettings;
-    input.checked = settings[input.name];
-  }
+  makeTablePreview();
 });
 
 document.getElementById('signout').onclick = () => chrome.storage.sync.remove('users', () => location.reload());

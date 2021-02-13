@@ -4,6 +4,7 @@
 
 .col-1 input[type=checkbox], .row-1 input[type=checkbox] {
     filter: grayscale(1);
+    cursor: grab;
 }
 
 .col-1 input[type=checkbox]:checked, .row-1 input[type=checkbox]:checked {
