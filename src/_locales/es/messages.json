@@ -1,9 +1,9 @@
 {
   "title": {
-    "message": "Crear Rápida para Google Docs"
+    "message": "Matriz de creación rápida de gApp"
   },
   "description": {
-    "message": "Crear nuevos documentos para Google Drive usando la barra del navegador."
+    "message": "Seleccione entre varias cuentas para crear nuevos documentos de Google y abrir los servicios de Google."
   },
   "doc": {
     "message": "Documento"
@@ -19,5 +19,29 @@
   },
   "form": {
     "message": "Formulario"
+  },
+  "cal": {
+    "message": "Calendario"
+  },
+  "class": {
+    "message": "Aula"
+  },
+  "photo": {
+    "message": "Fotos"
+  },
+  "signout": {
+    "message": "Cerrar sesión en todas las cuentas"
+  },
+  "reset": {
+    "message": "Restablecer todos los ajustes"
+  },
+  "appearance": {
+    "message": "Apariencia"
+  },
+  "account": {
+    "message": "Cuenta"
+  },
+  "edit": {
+    "message": "Editar"
   }
 }

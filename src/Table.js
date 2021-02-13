@@ -96,9 +96,9 @@ export function makeCell(td, rowData, colData, position) {
  */
 export function generateTable(topHeader, sideHeader, {cellGenerator=makeCell, invert=false}={}) {
   /**
-   * TODO
+   * Returns data for the side header, taking into account `invert`
    * @param row {number?}
-   * @return {[string, string][]|[string, string]}
+   * @return {[string, string][]|[string, string]} [key, val] if `row` provided, otherwise an array of key value pairs
    */
   function getSideHeader(row) {
     const entries = Object.entries(invert ? topHeader : sideHeader);
@@ -107,9 +107,9 @@ export function generateTable(topHeader, sideHeader, {cellGenerator=makeCell, in
   }
 
   /**
-   * TODO
+   * Returns data for the top header, taking into account `invert`
    * @param col {number?}
-   * @return {[string, string][]|[string, string]}
+   * @return {[string, string][]|[string, string]}  [key, val] if `col` provided, otherwise an array of key value pairs
    */
   function getTopHeader(col) {
     const entries = Object.entries(invert ? sideHeader : topHeader);

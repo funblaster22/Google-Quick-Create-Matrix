@@ -1,9 +1,9 @@
 {
   "title": {
-    "message": "Google Docs Quick Create"
+    "message": "Schnell Matrix erstellen für gApp"
   },
   "description": {
-    "message": "Erstelle neue Google Drive Dokumente direkt aus der Browser Leiste."
+    "message": "Wählen Sie aus mehreren Konten aus, um neue Google-Dokumente zu erstellen und Google-Dienste zu öffnen."
   },
   "doc": {
     "message": "Dokument"
@@ -19,5 +19,29 @@
   },
   "form": {
     "message": "Formular"
+  },
+  "cal": {
+    "message": "Kalender"
+  },
+  "class": {
+    "message": "Klassenzimmer"
+  },
+  "photo": {
+    "message": "Fotos"
+  },
+  "signout": {
+    "message": "Von allen Konten abmelden"
+  },
+  "reset": {
+    "message": "Schaltfläche zum Wiederherstellen aller Standardeinstellungen"
+  },
+  "appearance": {
+    "message": "Aussehen"
+  },
+  "account": {
+    "message": "Konto"
+  },
+  "edit": {
+    "message": "Bearbeiten"
   }
 }

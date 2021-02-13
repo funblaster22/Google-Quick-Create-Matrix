@@ -1,9 +1,9 @@
 {
   "title": {
-    "message": "Google Docs Quick Create"
+    "message": "gApp Quick Create Matrix"
   },
   "description": {
-    "message": "Create new Documents for Google Drive from your browser bar."
+    "message": "Select from multiple accounts to create new Google Documents & open Google services."
   },
   "doc": {
     "message": "Docs"
@@ -21,7 +21,7 @@
     "message": "Forms"
   },
   "script": {
-    "message": "App Scripts"
+    "message": "Apps Script"
   },
   "drive": {
     "message": "Drive"
