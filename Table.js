@@ -1,5 +1,5 @@
 import signin from './Signin.js';
-import {default_settings, default_services} from "./defaults.js";
+import {default_settings, default_services} from "./global.js";
 
 
 /** @typedef {{id: string, name: string, link: string}} service */
