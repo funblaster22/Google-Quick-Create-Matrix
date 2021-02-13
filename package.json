@@ -1,0 +1,21 @@
+{
+  "name": "google-docs-quick-create",
+  "version": "1.0.0",
+  "description": "Create new Documents for Google Drive from your browser bar",
+  "main": "build.js",
+  "scripts": {
+    "start": "node ."
+  },
+  "author": "funblaster22",
+  "license": "GPLv3",
+  "dependencies": {
+    "@node-minify/clean-css": "^6.2.0",
+    "@node-minify/core": "^6.2.0",
+    "@node-minify/html-minifier": "^6.2.0",
+    "@node-minify/uglify-es": "^6.2.0",
+    "archiver": "^5.2.0",
+    "fs-extra": "^9.1.0",
+    "glob": "^7.1.6",
+    "install": "^0.13.0"
+  }
+}
