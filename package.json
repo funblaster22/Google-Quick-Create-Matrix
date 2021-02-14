@@ -4,7 +4,8 @@
   "description": "Create new Documents for Google Drive from your browser bar",
   "main": "build.js",
   "scripts": {
-    "start": "node ."
+    "start": "node .",
+    "build": "node ."
   },
   "author": "funblaster22",
   "license": "GPLv3",

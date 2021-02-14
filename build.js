@@ -5,6 +5,7 @@ const htmlMini = require('@node-minify/html-minifier');
 const glob = require("glob");
 const fs = require('fs-extra');
 const archiver = require('archiver');
+const path = require('path');
 
 
 function negativeArrayIndex(array, negativeIndex=1) {
@@ -40,7 +41,9 @@ function minifyJSON(file) {
 
 // Make folders
 fs.removeSync(__dirname + "/build");
-fs.copySync(__dirname + "/src", __dirname + "/build");
+fs.copySync(__dirname + "/src", __dirname + "/build", {
+  filter: (src, dest) => !['.ai', '.xcf'].includes(path.extname(src))
+});
 
 glob("src/**/*.{html,js,css,json,svg}", function (er, files) {
   var promises = [];

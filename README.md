@@ -7,3 +7,5 @@ Available in the Chrome Web Store at https://chrome.google.com/webstore/detail/g
 
 ### Resources
 * Spanish translation: https://about.google/intl/es/products/
+* Logos: https://ssl.gstatic.com/docs/common/material_common_sprite251.svg
+* More logos: https://worldvectorlogo.com/
