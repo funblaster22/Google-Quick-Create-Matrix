@@ -1,3 +1,14 @@
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('sw.js')
+      .then(registration => {
+        console.log('ServiceWorker registered')
+      }, err => {
+        console.error('ServiceWorker registration failed:', err)
+      });
+  });
+}
+
 export const default_settings = {
   doc: true, sheet: true, prez: true, draw: true, form: true
 };
