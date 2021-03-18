@@ -1,5 +1,3 @@
-// TODO: cache generated table HTML to speed up loading?
-
 // Adapted from https://gist.github.com/fibo/4a1df242b900d4caa217dfc305266847
 
 // Fill here with your cache name-version.
@@ -13,7 +11,23 @@ self.addEventListener('install', event => {
     const cache = await caches.open(CACHE_NAME)
 
     await cache.addAll(CACHED_URLS);
+    self.skipWaiting();
   }());
+});
+
+addEventListener('message', async (event) => {
+  // TODO: wrap in event.waitUntil if needed
+  if (event.data.type === 'SAVE') {
+    const cache = await caches.open(CACHE_NAME);
+    const headers = {
+      headers: {
+        'Content-Type': 'text/html'
+      }
+    };
+    // Must convert from chrome-extension protocol to https because "Failed to execute 'put' on 'Cache': Request scheme 'chrome-extension' is unsupported"
+    await cache.put(event.data.url.replace('chrome-extension', 'https'), new Response(event.data.body, headers));
+    console.log("Successfully cached", event.data.url);
+  }
 });
 
 // Cache and update with stale-while-revalidate policy.
@@ -31,6 +45,14 @@ self.addEventListener('fetch', event => {
 
   event.respondWith(async function () {
     const cache = await caches.open(CACHE_NAME);
+
+    // chrome.runtime.getURL('popup.html') does not work in service worker
+    if (request.url === "chrome-extension://gicglcbkcocdnjjeanpalgbeammnjcea/popup.html") {
+      const cachedResponsePromise = await cache.match(request.url.replace('chrome-extension', 'https'));
+      console.log("Serving popup from cache");
+      console.log(cachedResponsePromise);
+      return cachedResponsePromise;
+    }
 
     const cachedResponsePromise = await cache.match(request);
     const networkResponsePromise = fetch(request);
@@ -61,5 +83,6 @@ self.addEventListener('activate', event => {
         return deleteThisCache;
       }).map(cacheName => caches.delete(cacheName))
     );
+    await clients.claim();
   }());
 });

@@ -1,7 +1,7 @@
 import signin from './Signin.js';
 import {default_settings, default_services} from "./global.js";
 
-
+/** @return {Promise<HTMLTableElement>}*/
 export default function makeTablePrefab(includeAll=false) {
   return new Promise(res => {
     chrome.storage.sync.get(['users', 'settings', 'services'], storage => {
@@ -33,11 +33,6 @@ export default function makeTablePrefab(includeAll=false) {
       console.log(users, settings, services);
       /** @typedef {named & {email: string, ID: number}} user */
       const newTable = generateTable(services,{...users, 'icons/signin-32.png': {name: "signin"}}, {invert: settings.invert});
-      const existingTable = document.querySelector('table');
-      if (existingTable)
-        existingTable.replaceWith(newTable);
-      else
-        document.body.appendChild(newTable);
       res(newTable);
     });
   });
@@ -95,6 +90,7 @@ export function makeCell(td, rowData, colData, position) {
  * @return {HTMLTableElement}
  */
 export function generateTable(topHeader, sideHeader, {cellGenerator=makeCell, invert=false}={}) {
+  console.time("Table generated in");
   /**
    * Returns data for the side header, taking into account `invert`
    * @param row {number?}
@@ -161,5 +157,6 @@ export function generateTable(topHeader, sideHeader, {cellGenerator=makeCell, in
     }
     table.appendChild(tr);
   }
+  console.timeEnd("Table generated in");
   return table;
 }

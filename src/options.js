@@ -5,7 +5,19 @@ localizeHtmlPage();
 
 let settings;
 function makeTablePreview() {
-  generateTable(true).then(() => {
+  generateTable().then(newTable => {
+    document.body.appendChild(newTable);
+    navigator.serviceWorker.controller.postMessage({
+      type: 'SAVE',
+      url: chrome.runtime.getURL('popup.html'),
+      body: "<link href=\"global.css\" rel=\"stylesheet\" type=\"text/css\" />" + newTable.outerHTML
+    });
+  });
+
+  generateTable(true).then(newTable => {
+    const existingTable = document.querySelector('table');
+    existingTable.replaceWith(newTable);
+
     // Remove links from table
     for (const link of document.getElementsByTagName('a'))
       link.removeAttribute('href');
