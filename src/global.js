@@ -17,6 +17,13 @@ export const default_services = [
   'doc', 'sheet', 'prez', 'draw', 'form', 'script', 'drive', 'gmail', 'cal', 'class', 'photo'
 ];
 
+export const HEAD = '<head>' +
+  '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />\n' +
+  '<title>gApp Quick Create</title>\n' +
+  '<link href="global.css" rel="stylesheet" type="text/css" />' +
+  '<script src="popup.js" type="module"></script>' +
+  '</head>';
+
 // Adapted from https://stackoverflow.com/a/25612056
 export function localizeHtmlPage() {
   //Localize by replacing __MSG_***__ meta tags
@@ -35,5 +42,17 @@ export function localizeHtmlPage() {
     {
       obj.innerHTML = valNewH;
     }
+  }
+}
+
+/**
+ * Updates all 'selector' css 'prop' to 'val', similar to $().css()
+ * @param {string} selector
+ * @param {string} prop
+ * @param {string} val
+ */
+export function css(selector, prop, val) {
+  for (const item of document.querySelectorAll(selector)) {
+    item.style[prop] = val;
   }
 }

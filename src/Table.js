@@ -1,5 +1,5 @@
 import signin from './Signin.js';
-import {default_settings, default_services} from "./global.js";
+import {default_settings, default_services, css} from "./global.js";
 
 /** @return {Promise<HTMLTableElement>}*/
 export default function makeTablePrefab(includeAll=false) {
@@ -47,12 +47,6 @@ export default function makeTablePrefab(includeAll=false) {
  * @param position {Number[]} row, column
  */
 export function makeCell(td, rowData, colData, position) {
-  function css(selector, prop, val) {
-    for (const item of document.querySelectorAll(selector)) {
-      item.style[prop] = val;
-    }
-  }
-
   console.log(rowData, colData);
   const link = document.createElement('a');
   if (rowData.name === "signin") {
@@ -87,7 +81,7 @@ export function makeCell(td, rowData, colData, position) {
  * @param sideHeader {Object<string, named>} Synonymous with row header. Key is the name, and value is img URL to show
  * @param cellGenerator {createCellCallback}
  * @param invert {boolean}
- * @return {HTMLTableElement}
+ * @return {HTMLDivElement}
  */
 export function generateTable(topHeader, sideHeader, {cellGenerator=makeCell, invert=false}={}) {
   console.time("Table generated in");
@@ -113,18 +107,27 @@ export function generateTable(topHeader, sideHeader, {cellGenerator=makeCell, in
     return entries;
   }
 
-  // Clear headers
-  document.getElementById('topHeader').innerHTML = "";
-  document.getElementById('sideHeader').innerHTML = "";
+  // Create headers, body, & container
+  const containerDiv = document.createElement('div');
+  containerDiv.className = "grid-container";
+  const topHeaderDiv = document.createElement('div');
+  topHeaderDiv.className = "topHeader";
+  const sideHeaderDiv = document.createElement('div');
+  sideHeaderDiv.className = "sideHeader";
+  containerDiv.appendChild(topHeaderDiv);
+  containerDiv.appendChild(sideHeaderDiv);
 
   // Populate table
   const table = document.createElement('table');
+  table.className = "table";
+  containerDiv.appendChild(table);
   for (let row = -1; row < getSideHeader().length; row++) {
     const tr = document.createElement('tr');
     for (let col=-1; col < getTopHeader().length; col++) {
       const td = document.createElement('td');
       tr.classList.add('row' + row);
       td.classList.add('col' + col);
+      td.classList.add('row' + row);
       if (row === -1 ^ col === -1) { // XOR to skip corner (only executes if one is true, but not both)
         // Create container so that the image can be grayscaled, without affecting background when hovering
         const container = document.createElement('span');
@@ -136,14 +139,14 @@ export function generateTable(topHeader, sideHeader, {cellGenerator=makeCell, in
           checkbox.name = getTopHeader(col)[1].name;
           checkbox.title = chrome.i18n.getMessage(getTopHeader(col)[1].name) || getTopHeader(col)[1].name;
           container.appendChild(checkbox);
-          document.getElementById('topHeader').appendChild(container);
+          topHeaderDiv.appendChild(container);
         }
         else if (row > -1 && col === -1) {
           checkbox.style.backgroundImage = 'url("' + getSideHeader(row)[0] + '")';
           checkbox.name = getSideHeader(row)[1].name;
           checkbox.title = chrome.i18n.getMessage(getSideHeader(row)[1].name) || getSideHeader(row)[1].name;
           container.appendChild(checkbox);
-          document.getElementById('sideHeader').appendChild(container);
+          sideHeaderDiv.appendChild(container);
         }
         container.classList.add(...td.classList, tr.classList);
         continue;
@@ -158,5 +161,5 @@ export function generateTable(topHeader, sideHeader, {cellGenerator=makeCell, in
     table.appendChild(tr);
   }
   console.timeEnd("Table generated in");
-  return table;
+  return containerDiv;
 }

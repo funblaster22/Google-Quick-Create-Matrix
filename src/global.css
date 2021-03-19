@@ -73,8 +73,8 @@ td > a:hover::before {
 	width: fit-content;
 }
 
-#sideHeader { grid-area: sideHeader; }
+.sideHeader { grid-area: sideHeader; }
 
-#topHeader { grid-area: topHeader; }
+.topHeader { grid-area: topHeader; }
 
-#table { grid-area: body; }
+.table { grid-area: body; }
