@@ -4,6 +4,8 @@
 // See https://stackoverflow.com/a/54181225 for how to get user profile pic without OAuth if above is true
 // Official docs: https://developer.chrome.com/docs/extensions/mv2/tut_oauth/
 
+import {makeTablePreview} from "./options.js";
+
 
 function getDetails(token) {
   // Does not work because can not choose user
@@ -82,7 +84,6 @@ export default async function signin() {
     //const max = Math.max(0, ...Object.keys(users).map(item => Number.parseInt(item)));
     users[user.picture] = {name: user.email, email: user.email, ID: Object.keys(users).length};
     // TODO: figure out WHY new users aren't added in order (new users are shown BEFORE existing users in table)
-    chrome.storage.sync.set({'users': users}, () => {});
+    chrome.storage.sync.set({'users': users}, makeTablePreview);
   });
-  location.reload();
 }

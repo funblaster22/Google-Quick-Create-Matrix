@@ -4,9 +4,9 @@ import {default_settings, localizeHtmlPage, HEAD} from "./global.js";
 localizeHtmlPage();
 
 let settings;
-function makeTablePreview() {
+export function makeTablePreview() {
   generateTable().then(newTable => {
-    navigator.serviceWorker.controller.postMessage({
+    navigator.serviceWorker.controller?.postMessage({
       type: 'SAVE',
       url: chrome.runtime.getURL('popup.html'),
       body: HEAD + newTable.outerHTML
@@ -18,7 +18,7 @@ function makeTablePreview() {
     existingTable.replaceWith(newTable);
 
     // Remove links from table
-    for (const link of document.getElementsByTagName('a'))
+    for (const link of document.querySelectorAll('.grid-container a'))
       link.removeAttribute('href');
 
     // Make icons draggable
@@ -83,5 +83,5 @@ chrome.storage.sync.get(['settings', 'services'], storage => {
   makeTablePreview();
 });
 
-document.getElementById('signout').onclick = () => chrome.storage.sync.remove('users', () => location.reload());
-document.getElementById('reset').onclick = () => chrome.storage.sync.remove(['settings', 'services'], () => location.reload());
+document.getElementById('signout').onclick = () => chrome.storage.sync.remove('users', makeTablePreview);
+document.getElementById('reset').onclick = () => chrome.storage.sync.remove(['settings', 'services'], makeTablePreview);

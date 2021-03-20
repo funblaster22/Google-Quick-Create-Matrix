@@ -1,5 +1,4 @@
 import {css} from "./global.js";
-import signin from './Signin.js';
 
 window.addEventListener('load', () => {
   // TODO: depreciated, use window.performance.getEntries(). Fine for now, just debugging
