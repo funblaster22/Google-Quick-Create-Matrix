@@ -49,9 +49,11 @@ self.addEventListener('fetch', event => {
     // chrome.runtime.getURL('popup.html') does not work in service worker
     if (request.url === "chrome-extension://gicglcbkcocdnjjeanpalgbeammnjcea/popup.html") {
       const cachedResponsePromise = await cache.match(request.url.replace('chrome-extension', 'https'));
-      console.log("Serving popup from cache");
-      console.log(cachedResponsePromise);
-      return cachedResponsePromise;
+      if (cachedResponsePromise !== undefined) {
+        console.log("Serving popup from cache");
+        console.log(cachedResponsePromise);
+        return cachedResponsePromise;
+      }
     }
 
     const cachedResponsePromise = await cache.match(request);

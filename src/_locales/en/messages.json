@@ -56,5 +56,21 @@
   "edit": {
     "message": "Edit",
     "description": "the header for the table preview/editing in settings"
+  },
+  "first_launch": {
+    "message": "First Launch Config",
+    "description": "header to show on first launch configuration"
+  },
+  "options": {
+    "message": "More Options",
+    "description": "button to show more options on first launch config screen"
+  },
+  "instructions1": {
+    "message": "Click services to show/hide them in popup, rearrange by dragging, and add an account by clicking anywhere in grid. Add accounts in the order that you signed in to Google with.",
+    "description": "instructions on how to modify table appearance"
+  },
+  "instructions2": {
+    "message": "These options can be edited later by right clicking on the extension icon & selecting \"Options\"",
+    "description": "instructions on how to access options"
   }
 }

@@ -43,5 +43,17 @@
   },
   "edit": {
     "message": "Editar"
+  },
+  "first_launch": {
+    "message": "Configuración de primer lanzamiento"
+  },
+  "options": {
+    "message": "Mas opciones"
+  },
+  "instructions1": {
+    "message": "Haga clic en los servicios para mostrarlos / ocultarlos en una ventana emergente, reorganizarlos arrastrándolos y agregar una cuenta haciendo clic en cualquier lugar de la cuadrícula. Agregue cuentas en el orden en que inició sesión en Google."
+  },
+  "instructions2": {
+    "message": "Estas opciones se pueden editar más tarde haciendo clic con el botón derecho en el icono de la extensión y seleccionando \"Opciones\"."
   }
 }

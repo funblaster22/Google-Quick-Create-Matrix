@@ -19,7 +19,7 @@ export const default_services = [
 
 export const HEAD = '<head>' +
   '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />\n' +
-  '<title>gApp Quick Create</title>\n' +
+  `<title>${chrome.i18n.getMessage('title')}</title>\n` +
   '<link href="global.css" rel="stylesheet" type="text/css" />' +
   '<script src="popup.js" type="module"></script>' +
   '</head>';

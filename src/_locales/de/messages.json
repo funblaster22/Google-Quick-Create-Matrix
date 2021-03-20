@@ -43,5 +43,17 @@
   },
   "edit": {
     "message": "Bearbeiten"
+  },
+  "first_launch": {
+    "message": "Konfiguration zuerst starten"
+  },
+  "options": {
+    "message": "More Options"
+  },
+  "instructions1": {
+    "message": "Klicken Sie auf Dienste, um sie im Popup anzuzeigen / auszublenden, durch Ziehen neu anzuordnen und ein Konto hinzuzufügen, indem Sie auf eine beliebige Stelle im Raster klicken. Fügen Sie Konten in der Reihenfolge hinzu, in der Sie sich bei Google angemeldet haben."
+  },
+  "instructions2": {
+    "message": "Diese Optionen können später bearbeitet werden, indem Sie mit der rechten Maustaste auf das Erweiterungssymbol klicken und \"Optionen\" auswählen."
   }
 }
