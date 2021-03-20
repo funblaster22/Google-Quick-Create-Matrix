@@ -1,4 +1,4 @@
-gApp Quick Create Matrix
+Google Quick Create Matrix
 ========================
 
 Simple Chrome Extension for creating new documents in Google Drive with multi-user support.
