@@ -63,7 +63,7 @@ td > a:hover::before {
 .grid-container {
 	display: grid;
 	grid-template-columns: 32px 1fr;
-	grid-template-rows: 32px 1fr;
+	grid-template-rows: auto 1fr;
 	gap: 0 0;
 	grid-template-areas:
     ". topHeader"

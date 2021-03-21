@@ -72,5 +72,14 @@
   "instructions2": {
     "message": "These options can be edited later by right clicking on the extension icon & selecting \"Options\"",
     "description": "instructions on how to access options"
+  },
+  "setting_useBottom": {
+    "message": "Put header at bottom"
+  },
+  "setting_newIcons": {
+    "message": "Use new icons"
+  },
+  "setting_invert": {
+    "message": "Swap table axes"
   }
 }

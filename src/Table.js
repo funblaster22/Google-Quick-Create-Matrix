@@ -36,6 +36,10 @@ export default function makeTablePrefab(includeAll=false, includeSignin=true) {
         ...users,
         ...(includeSignin ? {'icons/signin-32.png': {name: "signin"}} : {})
       }, {invert: settings.invert});
+      if (settings.useBottom) {
+        newTable.style.gridTemplateAreas = '"sideHeader body" ". topHeader"';
+      }
+
       res(newTable);
     });
   });

@@ -69,23 +69,26 @@ function updateSettings(ev) {
 }
 
 
-chrome.storage.sync.get(['settings', 'services'], storage => {
-  console.log(storage);
-  settings = {...default_settings, ...storage.settings};
+function load() {
+  chrome.storage.sync.get(['settings', 'services'], storage => {
+    console.log(storage);
+    settings = {...default_settings, ...storage.settings};
 
-  /* Load in services
-  for (const service of storage.services || default_services) {
-    const label = document.createElement('label');
-    const input = document.createElement('input');
-    input.type = 'checkbox';
-    input.name = service;
-    label.appendChild(input);
-    label.append(chrome.i18n.getMessage(service));
-    document.getElementById('services').appendChild(label);
-  }*/
+    /* Unused code to generate settings checkboxes, maybe use later
+    for (const [setting, enabled] of Object.entries(settings)) {
+      if (document.getElementsByName(setting).length > 0) continue;  // Skip settings already in DOM
+      const label = document.createElement('label');
+      const checkbox = document.createElement('input');
+      checkbox.type = "checkbox";
+      checkbox.name = setting;
+      label.appendChild(checkbox);
+      label.append(chrome.i18n.getMessage(setting));
+    }*/
 
-  makeTablePreview();
-});
+    makeTablePreview();
+  });
+}
+load();
 
 document.getElementById('signout').onclick = () => chrome.storage.sync.remove('users', () => {
   makeTablePreview();
@@ -94,4 +97,4 @@ document.getElementById('signout').onclick = () => chrome.storage.sync.remove('u
     url: chrome.runtime.getURL('popup.html')
   });  // Remove precached table
 });
-document.getElementById('reset').onclick = () => chrome.storage.sync.remove(['settings', 'services'], makeTablePreview);
+document.getElementById('reset').onclick = () => chrome.storage.sync.remove(['settings', 'services'], load);
