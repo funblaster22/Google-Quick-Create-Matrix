@@ -5,11 +5,11 @@ localizeHtmlPage();
 
 let settings;
 export function makeTablePreview() {
-  generateTable().then(newTable => {
     navigator.serviceWorker.controller?.postMessage({
       type: 'SAVE',
       url: chrome.runtime.getURL('popup.html'),
       body: HEAD + newTable.outerHTML
+    generateTable(false, false).then(newTable => {
     });
   });
 

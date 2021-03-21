@@ -7,6 +7,7 @@ window.addEventListener('load', () => {
   console.log("Load Time:", perf.domComplete - perf.requestStart, 'ms');
 });
 
+// Make table interactable
 chrome.tabs.query({
   active: true,
   currentWindow: true
@@ -19,9 +20,7 @@ chrome.tabs.query({
     td.onmouseenter = () => css(selector, 'backgroundColor', 'lightblue');
     td.onmouseleave = () => css(selector, 'backgroundColor', '');
 
-    if (a.hasAttribute('onclick')) {
-      a.onclick = signin;
-    } else if (tabs[0].url === "chrome://newtab/") {
+    if (tabs[0].url === "chrome://newtab/") {
       a.removeAttribute('target');
       a.onclick = () => chrome.tabs.update({
         url: a.href

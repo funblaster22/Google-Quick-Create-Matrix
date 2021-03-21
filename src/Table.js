@@ -2,7 +2,7 @@ import signin from './Signin.js';
 import {default_settings, default_services, css} from "./global.js";
 
 /** @return {Promise<HTMLTableElement>}*/
-export default function makeTablePrefab(includeAll=false) {
+export default function makeTablePrefab(includeAll=false, includeSignin=true) {
   return new Promise(res => {
     chrome.storage.sync.get(['users', 'settings', 'services'], storage => {
       const users = storage.users;
@@ -32,7 +32,10 @@ export default function makeTablePrefab(includeAll=false) {
       }
       console.log(users, settings, services);
       /** @typedef {named & {email: string, ID: number}} user */
-      const newTable = generateTable(services,{...users, 'icons/signin-32.png': {name: "signin"}}, {invert: settings.invert});
+      const newTable = generateTable(services,{
+        ...users,
+        ...(includeSignin ? {'icons/signin-32.png': {name: "signin"}} : {})
+      }, {invert: settings.invert});
       res(newTable);
     });
   });
