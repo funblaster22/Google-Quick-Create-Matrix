@@ -27,6 +27,9 @@ addEventListener('message', async (event) => {
     // Must convert from chrome-extension protocol to https because "Failed to execute 'put' on 'Cache': Request scheme 'chrome-extension' is unsupported"
     await cache.put(event.data.url.replace('chrome-extension', 'https'), new Response(event.data.body, headers));
     console.log("Successfully cached", event.data.url);
+  } else if (event.data.type === 'DELETE') {
+    await (await caches.open(CACHE_NAME)).delete(event.data.url.replace('chrome-extension', 'https'));
+    console.log("Hello")
   }
 });
 

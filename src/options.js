@@ -5,11 +5,15 @@ localizeHtmlPage();
 
 let settings;
 export function makeTablePreview() {
-    navigator.serviceWorker.controller?.postMessage({
-      type: 'SAVE',
-      url: chrome.runtime.getURL('popup.html'),
-      body: HEAD + newTable.outerHTML
+  chrome.storage.sync.get('users', storage => {
+    // Ignore type coercion, want to match undefined and []
+    if (storage.users == undefined) return;  // Don't change first start page until an account has been added
     generateTable(false, false).then(newTable => {
+      navigator.serviceWorker.controller?.postMessage({
+        type: 'SAVE',
+        url: chrome.runtime.getURL('popup.html'),
+        body: HEAD + newTable.outerHTML
+      });
     });
   });
 
@@ -83,5 +87,11 @@ chrome.storage.sync.get(['settings', 'services'], storage => {
   makeTablePreview();
 });
 
-document.getElementById('signout').onclick = () => chrome.storage.sync.remove('users', makeTablePreview);
+document.getElementById('signout').onclick = () => chrome.storage.sync.remove('users', () => {
+  makeTablePreview();
+  navigator.serviceWorker.controller?.postMessage({
+    type: 'DELETE',
+    url: chrome.runtime.getURL('popup.html')
+  });  // Remove precached table
+});
 document.getElementById('reset').onclick = () => chrome.storage.sync.remove(['settings', 'services'], makeTablePreview);
