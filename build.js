@@ -1,5 +1,5 @@
 const minify = require('@node-minify/core');
-const uglifyES = require('@node-minify/uglify-es');
+const terser = require('@node-minify/terser');
 const cleanCSS = require('@node-minify/clean-css');
 const htmlMini = require('@node-minify/html-minifier');
 const glob = require("glob");
@@ -52,7 +52,7 @@ glob("src/**/*.{html,js,css,json,svg}", function (er, files) {
     switch (negativeArrayIndex(file.split('.'))) {
       case 'js':
         promises.push(minify({
-          compressor: uglifyES,
+          compressor: terser,
           input: file,
           output: file.replace('src', 'build'),
           options: {

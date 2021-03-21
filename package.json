@@ -13,7 +13,7 @@
     "@node-minify/clean-css": "^6.2.0",
     "@node-minify/core": "^6.2.0",
     "@node-minify/html-minifier": "^6.2.0",
-    "@node-minify/uglify-es": "^6.2.0",
+    "@node-minify/terser": "^6.2.0",
     "archiver": "^5.2.0",
     "fs-extra": "^9.1.0",
     "glob": "^7.1.6",
