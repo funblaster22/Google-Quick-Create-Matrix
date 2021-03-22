@@ -21,7 +21,9 @@ export default function makeTablePrefab(includeAll=false, includeSignin=true) {
         gmail: {[`icons/${settings.newIcons ? 'new' : 'old'}/gmail.svg`]: {name: "gmail", link: "https://mail.google.com/mail/u/??/#inbox"}},
         class: {"icons/old/classroom.svg": {name: "class", link: "https://classroom.google.com/u/??/"}},
         cal: {[`icons/${settings.newIcons ? 'new' : 'old'}/calendar.svg`]: {name: "cal", link: "https://calendar.google.com/calendar/u/??/"}},
-        photo: {[`icons/${settings.newIcons ? 'new' : 'old'}/photos.svg`]: {name: "photo", link: "https://photos.google.com/u/??/"}}
+        photo: {[`icons/${settings.newIcons ? 'new' : 'old'}/photos.svg`]: {name: "photo", link: "https://photos.google.com/u/??/"}},
+        hangouts: {"icons/old/hangouts.svg": {name: "hangouts", link: "https://hangouts.google.com/??/"}},
+        youtube: {"icons/old/youtube.png": {name: "youtube", link: "https://youtube.com"}}  // unfortunately, there is no url to switch youtube accounts
       };
 
       let services = {};

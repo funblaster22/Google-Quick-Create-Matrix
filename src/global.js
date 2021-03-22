@@ -1,3 +1,4 @@
+// TODO: might be inefficient, but probably imperceptible
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('sw.js')
@@ -14,7 +15,7 @@ export const default_settings = {
 };
 
 export const default_services = [
-  'doc', 'sheet', 'prez', 'draw', 'form', 'script', 'drive', 'gmail', 'cal', 'class', 'photo'
+  'doc', 'sheet', 'prez', 'draw', 'form', 'script', 'drive', 'gmail', 'cal', 'class', 'photo', 'hangouts', 'youtube'
 ];
 
 export const HEAD = '<head>' +
