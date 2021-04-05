@@ -10,6 +10,8 @@ if ('serviceWorker' in navigator) {
   });
 }
 
+chrome.runtime.setUninstallURL("https://docs.google.com/forms/d/e/1FAIpQLSfSW9ba4_vDMCL_P2V5XkPDKp5xo648zQHqIAB91eMz1PALew/viewform?usp=sf_link");
+
 export const default_settings = {
   doc: true, sheet: true, prez: true, draw: true, form: true
 };
@@ -47,7 +49,7 @@ export function localizeHtmlPage() {
 }
 
 /**
- * Updates all 'selector' css 'prop' to 'val', similar to $().css()
+ * Updates all 'selector' css 'prop' to 'val', similar to jQuery .css()
  * @param {string} selector
  * @param {string} prop
  * @param {string} val
