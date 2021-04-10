@@ -5,6 +5,9 @@
   "description": "__MSG_description__",
   "default_locale": "en",
   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA8teux8xd0wbuSACNRvXubwH9HKCMSbNuZvPCNQ7sBZGR/6nZD2W/TUUkI+tS8z946ytbbhLLURDkTCs1kc9ZQc3qdCchMDHhLH5rbI+Iimz0vtG61TtCvrZKTYF6zn9IJe+lQ/QLUCI3s57P+mxvGeguxQ8xGZFTwfJ9OjCqWtvGoL7DlpjgCjv5MgFK0Emyuom5F3J0VO5DVP9sBZynmEkNkYQCr1espjSPNrOz6i4BiXh/PTJKbzXusnK2ydRY2R7x4sgBusWVhXIaGNPJECaAii9mpaAPAq6cS0bhpROdSELOG3Q2V2ud4KmOL0z7x32NByy2/8M1k8Rx5G2nBwIDAQAB",
+  "content_security_policy": {
+    "extension_pages": "default-src 'self'; img-src 'self' https://lh3.googleusercontent.com;"
+  },
   "action": {
     "default_popup": "popup.html",
     "default_icon": "icons/suite_38.png"
