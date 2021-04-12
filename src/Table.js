@@ -10,7 +10,9 @@ export default function makeTablePrefab(includeAll=false, includeSignin=true) {
 
       /** @typedef {named & {name: string, link: string}} service */
       /** @type {Object<string, Object<string, service>>} */
+      // TODO: currently, new service must be added here & global.js, unify
       const apps_imgs = {
+        account: {[settings.newIcons ? "icons/new/goog.svg" : "icons/old/goog-400.jpg"]: {name: 'account', link: "https://myaccount.google.com/u/??/"}},
         doc: {[settings.newIcons ? "icons/new/docs.svg" : "icons/old/docs-32.png"]: {name: 'doc', link: "https://docs.google.com/document/u/??/create"}},
         sheet: {[settings.newIcons ? "icons/new/spreadsheets.svg" : "icons/old/spreadsheets-32.png"]: {name: "sheet", link: "https://docs.google.com/spreadsheets/u/??/create"}},
         prez: {[settings.newIcons ? "icons/new/presentations.svg" : "icons/old/presentations-32.png"]: {name: "prez", link: "https://docs.google.com/presentation/u/??/create"}},
@@ -23,11 +25,11 @@ export default function makeTablePrefab(includeAll=false, includeSignin=true) {
         cal: {[`icons/${settings.newIcons ? 'new' : 'old'}/calendar.svg`]: {name: "cal", link: "https://calendar.google.com/calendar/u/??/"}},
         photo: {[`icons/${settings.newIcons ? 'new' : 'old'}/photos.svg`]: {name: "photo", link: "https://photos.google.com/u/??/"}},
         hangouts: {"icons/old/hangouts.svg": {name: "hangouts", link: "https://hangouts.google.com/??/"}},
-        youtube: {"icons/old/youtube.png": {name: "youtube", link: "https://youtube.com"}}  // unfortunately, there is no url to switch youtube accounts
+        youtube: {"icons/old/youtube.svg": {name: "youtube", link: "https://youtube.com"}}  // unfortunately, there is no url to switch youtube accounts
       };
 
       let services = {};
-      for (const service of storage.services || default_services) {
+      for (const service of new Set([...storage.services, ...default_services])) {
         if (settings[service] || includeAll) {
           services = {...services, ...apps_imgs[service]};
         }
