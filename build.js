@@ -44,17 +44,19 @@ fs.removeSync(__dirname + "/build");
 fs.copySync(__dirname + "/src", __dirname + "/build", {
   filter: (src, dest) => !['.ai', '.xcf'].includes(path.extname(src))
 });
+fs.copyFile(__dirname + '/LICENSE', __dirname + '/build/LICENSE');
 
 glob("src/**/*.{html,js,css,json,svg}", function (er, files) {
-  var promises = [];
-  for (var file of files) {
+  const promises = [];
+  for (const file of files) {
     console.log(file);
+    const dst = file.replace('src', 'build');
     switch (negativeArrayIndex(file.split('.'))) {
       case 'js':
         promises.push(minify({
           compressor: terser,
           input: file,
-          output: file.replace('src', 'build'),
+          output: dst,
           options: {
             compress: {drop_console: true}
           }
@@ -63,7 +65,7 @@ glob("src/**/*.{html,js,css,json,svg}", function (er, files) {
         promises.push(minify({
           compressor: cleanCSS,
           input: file,
-          output: file.replace('src', 'build')
+          output: dst
         })); break;
       case 'json':
         promises.push(minifyJSON(file)); break;
@@ -71,13 +73,13 @@ glob("src/**/*.{html,js,css,json,svg}", function (er, files) {
         promises.push(minify({
           compressor: htmlMini,
           input: file,
-          output: file.replace('src', 'build')
+          output: dst
         })); break;
       case 'svg':
         promises.push(minify({
           compressor: htmlMini,
           input: file,
-          output: file.replace('src', 'build'),
+          output: dst,
           options: {
             removeAttributeQuotes: false
           }
