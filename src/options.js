@@ -5,7 +5,7 @@ localizeHtmlPage();
 
 let settings;
 export function makeTablePreview() {
-  chrome.storage.sync.get('users', storage => {
+  chrome.storage.sync.get(['users', 'settings'], storage => {
     // Ignore type coercion, want to match undefined and []
     if (storage.users == undefined) return;  // Don't change first start page until an account has been added
     generateTable(false, false).then(newTable => {
@@ -15,28 +15,37 @@ export function makeTablePreview() {
         body: HEAD + newTable.outerHTML
       });
     });
-  });
 
-  generateTable(true).then(newTable => {
-    const existingTable = document.getElementsByClassName('grid-container')[0];
-    existingTable.replaceWith(newTable);
-
-    // Remove links from table
-    for (const link of document.querySelectorAll('.grid-container a'))
-      link.removeAttribute('href');
-
-    // Make icons draggable
-    new Sortable(document.getElementsByClassName('topHeader')[0], {
-      animation: 150,
-      ghostClass: "sortable-ghost", //somehow find a way to not show icon without being weird
-      onEnd: () => {
+    generateTable(true).then(newTable => {
+      function saveNewState(selector, storageName) {
         const services = [];
-        for (const checkbox of document.querySelectorAll('.topHeader input[type=checkbox]')) {
+        for (const checkbox of document.querySelectorAll(`.${selector} input[type=checkbox]`)) {
           services.push(checkbox.name);
         }
-        chrome.storage.sync.set({services: services}, makeTablePreview);
+        chrome.storage.sync.set({[storageName]: services}, makeTablePreview);
       }
-    });
+
+      const existingTable = document.getElementsByClassName('grid-container')[0];
+      existingTable.replaceWith(newTable);
+
+      // Remove links from table
+      for (const link of document.querySelectorAll('.grid-container a'))
+        link.removeAttribute('href');
+
+      // Make icons draggable
+      const selector = storage.settings.invert ? 'sideHeader' : 'topHeader';
+      new Sortable(document.getElementsByClassName(selector)[0], {
+        animation: 150,
+        ghostClass: "sortable-ghost", //somehow find a way to not show icon without being weird
+        onEnd: saveNewState.bind(this, selector, 'services')
+        /*() => {
+          const services = [];
+          for (const checkbox of document.querySelectorAll(`.${selector} input[type=checkbox]`)) {
+            services.push(checkbox.name);
+          }
+          chrome.storage.sync.set({services: services}, makeTablePreview);
+        }*/
+      });
 
     // Make user icons draggable
     new Sortable(document.getElementsByClassName('sideHeader')[0], {
@@ -51,11 +60,12 @@ export function makeTablePreview() {
       }
     });
 
-    // Add event listeners to radio buttons
-    for (const input of document.getElementsByTagName('input')) {
-      input.onchange = updateSettings;
-      input.checked = settings[input.name];
-    }
+      // Add event listeners to radio buttons
+      for (const input of document.getElementsByTagName('input')) {
+        input.onchange = updateSettings;
+        input.checked = settings[input.name];
+      }
+    });
   });
 }
 
