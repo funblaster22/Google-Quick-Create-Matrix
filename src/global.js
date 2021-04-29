@@ -10,7 +10,46 @@ if ('serviceWorker' in navigator) {
   });
 }
 
+// Code to migrate stored data when updating
+chrome.storage.sync.get('version', storage => {
+  function parseSemver(ver) {
+    return parseInt(ver.split('.')[0]);
+  }
+
+  let dataVersion = storage.version || 0;
+  const appVersion = parseSemver(chrome.runtime.getManifest().version);
+  const needsUpdate = dataVersion < appVersion;
+  if (appVersion < dataVersion) {
+    alert("Please update the extension, the data is stored in a format that is not compatible with the current version");
+    throw new Error("OOF");
+  }
+
+  while (dataVersion < appVersion) {
+    switch (dataVersion) {
+      case 1:
+        chrome.storage.sync.remove(['users', 'userOrder'], () => {
+          resetSW();
+          alert("Update complete! You need to sign in to your accounts again");
+        });
+        break;
+      default:
+        console.log("Nothing to do for version", dataVersion);
+    }
+    dataVersion++;
+  }
+  console.log("Update check finished");
+  if (needsUpdate)
+    chrome.storage.sync.set({version: dataVersion}, location.reload);
+})
+
 chrome.runtime.setUninstallURL("https://docs.google.com/forms/d/e/1FAIpQLSfSW9ba4_vDMCL_P2V5XkPDKp5xo648zQHqIAB91eMz1PALew/viewform?usp=sf_link");
+
+export function resetSW() {
+  navigator.serviceWorker.controller?.postMessage({
+    type: 'DELETE',
+    url: chrome.runtime.getURL('popup.html')
+  });  // Remove precached table
+}
 
 export const default_settings = {
   doc: true, sheet: true, prez: true, draw: true, form: true

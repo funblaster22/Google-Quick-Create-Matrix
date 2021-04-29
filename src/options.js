@@ -1,5 +1,5 @@
 import generateTable from "./Table.js";
-import {default_settings, localizeHtmlPage, HEAD} from "./global.js";
+import {default_settings, localizeHtmlPage, HEAD, resetSW} from "./global.js";
 
 localizeHtmlPage();
 
@@ -82,9 +82,6 @@ makeTablePreview();
 
 document.getElementById('signout').onclick = () => chrome.storage.sync.remove(['users', 'userOrder'], () => {
   makeTablePreview();
-  navigator.serviceWorker.controller?.postMessage({
-    type: 'DELETE',
-    url: chrome.runtime.getURL('popup.html')
-  });  // Remove precached table
+  resetSW();
 });
-document.getElementById('reset').onclick = () => chrome.storage.sync.clear(makeTablePreview);
+document.getElementById('reset').onclick = () => chrome.storage.sync.remove(['settings', 'services'], makeTablePreview);
