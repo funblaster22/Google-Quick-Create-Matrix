@@ -79,11 +79,14 @@ function getAuthToken() {
 export default async function signin() {
   const user = await getDetails(await getAuthToken());
   console.log(user);
-  chrome.storage.sync.get('users', users => {
-    users = {...users.users};
-    //const max = Math.max(0, ...Object.keys(users).map(item => Number.parseInt(item)));
-    users[user.picture] = {name: user.email, email: user.email, ID: Object.keys(users).length};
-    // TODO: figure out WHY new users aren't added in order (new users are shown BEFORE existing users in table)
-    chrome.storage.sync.set({'users': users}, makeTablePreview);
+  chrome.storage.sync.get(['users', 'userOrder', 'settings'], storage => {
+    const users = {...storage.users};  // Use spread operator in case userOrder is undefined, guarantees an object, DOES NOT WORK with arrays
+    //const max = Math.max(0, ...Object.keys(users).map(item => Number.parseInt(item))); //use if IDs can be skipped is added (eg. users 0, 1, and 3)
+    users[user.email] = {name: user.email, email: user.email, ID: Object.keys(users).length, icon: user.picture};
+    chrome.storage.sync.set({
+      users: users,
+      userOrder: [...(storage.userOrder || []), user.email],
+      settings: {...storage.settings, [user.email]: true}
+    }, makeTablePreview);
   });
 }
