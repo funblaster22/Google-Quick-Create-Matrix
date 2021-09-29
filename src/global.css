@@ -3,6 +3,8 @@ body {
 	color: #555;
 	margin: 0;
 	background-color: #FDFDFD;
+	/* Width must be applied to body, not table div b/c chromium bug: https://stackoverflow.com/a/44695002 */
+	width: fit-content;
 }
 
 table {
@@ -12,7 +14,7 @@ table {
 
 td {
 	/*border: 1px solid black;
-	/* can cause "blips" when moving between cells. Tried adding :hover to td itself, but that displaced the <a>*/
+	/* can cause "blips" when moving between cells. Tried adding :hover to td itself, but that displaced the <a> */
 	min-width: 32px;
 	width: 32px;
 	height: 32px;
@@ -70,7 +72,6 @@ td > a:hover::before {
     "sideHeader body";
 	border: 1px solid grey;
 	line-height: 0; /* Responsible for properly setting cell height */
-	width: fit-content;
 }
 
 .sideHeader { grid-area: sideHeader; }
