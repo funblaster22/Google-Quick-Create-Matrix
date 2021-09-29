@@ -11,7 +11,7 @@ export function makeTablePreview() {
         navigator.serviceWorker.controller?.postMessage({
           type: 'SAVE',
           url: chrome.runtime.getURL('popup.html'),
-          body: HEAD + newTable.outerHTML
+          body: '<!DOCTYPE html>' + HEAD + newTable.outerHTML
         });
       });
     }
