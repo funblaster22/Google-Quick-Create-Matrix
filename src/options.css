@@ -1,5 +1,14 @@
 :root {
     min-width: 260px;
+    max-width: 700px;
+}
+
+body {
+    margin: revert;
+}
+
+button {
+    font-size: inherit;
 }
 
 a:visited {
