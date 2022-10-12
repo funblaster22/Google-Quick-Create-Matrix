@@ -5,13 +5,16 @@ localizeHtmlPage();
 
 export function makeTablePreview() {
   chrome.storage.sync.get(['users', 'settings'], storage => {
+    document.body.style.setProperty('--bg', storage.settings.dark ? "#171A1D" : "#FDFDFD");
+    document.body.style.setProperty('--color', storage.settings.dark ? "white" : "#555");
+
     // Ignore type coercion, want to match undefined and []
     if (storage.users != undefined) {  // Don't change first start page until an account has been added
       generateTable(false, false).then(newTable => {
         navigator.serviceWorker.controller?.postMessage({
           type: 'SAVE',
           url: chrome.runtime.getURL('popup.html'),
-          body: '<!DOCTYPE html>' + HEAD + newTable.outerHTML
+          body: '<!DOCTYPE html>' + HEAD + `<style>body {--bg: ${storage.settings.dark ? "#171A1D" : "#FDFDFD"}; --color: ${storage.settings.dark ? "white" : "#555"}}</style>` + newTable.outerHTML
         });
       });
     }
@@ -67,9 +70,13 @@ export function makeTablePreview() {
 
 
 function updateSettings(ev) {
+  const target = ev.target;
+  if (target.name === "dark") {
+    document.body.style.setProperty('--bg', target.checked ? "#171A1D" : "#FDFDFD");
+    document.body.style.setProperty('--color', target.checked ? "white" : "#555");
+  }
   chrome.storage.sync.get('settings', storage => {
     const settings = {...default_settings, ...storage.settings};
-    const target = ev.target;
     console.log(target.checked, settings);
     settings[target.name] = target.checked;
 

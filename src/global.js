@@ -53,7 +53,7 @@ export function resetSW() {
 
 export const default_settings = {
   doc: true, sheet: true, prez: true, draw: true, form: true,
-  invert: true, newIcons: true, useBottom: true,
+  invert: true, newIcons: true, useBottom: true, dark: false,
 };
 
 export const default_services = [

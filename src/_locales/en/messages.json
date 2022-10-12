@@ -81,5 +81,8 @@
   },
   "setting_invert": {
     "message": "Swap table axes"
+  },
+  "setting_dark": {
+    "message": "Dark theme"
   }
 }
