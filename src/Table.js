@@ -1,5 +1,5 @@
 import signin from './Signin.js';
-import {default_settings, default_services, css} from "./global.js";
+import {default_settings, default_services, onCellEnterExit} from "./global.js";
 
 /** @return {Promise<HTMLTableElement>}*/
 export default function makeTablePrefab(includeAll=false, includeSignin=true) {
@@ -77,8 +77,9 @@ export function makeCell(td, rowData, colData, position) {
     link.target = "_blank";
     link.href = colData.link.replace('??', rowData.ID.toString());
   }
-  td.onmouseenter = () => css(`.col${position[1]}, .row${position[0]}`, 'backgroundColor', 'lightblue');
-  td.onmouseleave = () => css(`.col${position[1]}, .row${position[0]}`, 'backgroundColor', '');
+  const directions = [[-1, -1, "nw"], [1, -1, "ne"], [1, 1, "se"], [-1, 1, "sw"]];
+  td.onmouseenter = onCellEnterExit.bind(td, position, true);
+  td.onmouseleave = onCellEnterExit.bind(td, position, false);
   td.appendChild(link);
 }
 

@@ -100,3 +100,14 @@ export function css(selector, prop, val) {
     item.style[prop] = val;
   }
 }
+
+/**
+ * Changes background of current & surrounding cells
+ * @param position {Number[]} row, column
+ * @param entering {boolean} is mouse pointer entering or leaving cell?
+ */
+export function onCellEnterExit(position, entering) {
+    css(`.col${position[1]}, .row${position[0]}`, 'backgroundColor', entering ? 'lightblue' : '');
+    for (const [col, row, direction] of [[-1, -1, "nw"], [1, -1, "ne"], [1, 1, "se"], [-1, 1, "sw"]])
+      document.querySelector(`.col${position[1] + col}.row${position[0] + row}`)?.classList?.[entering ? "add" : "remove"]("selected-corner", direction);
+}

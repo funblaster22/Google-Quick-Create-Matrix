@@ -77,6 +77,7 @@ function getAuthToken() {
 
 
 export default async function signin() {
+  // TODO: loading animation & better UX if offline
   const user = await getDetails(await getAuthToken());
   console.log(user);
   chrome.storage.sync.get(['users', 'userOrder', 'settings'], storage => {
