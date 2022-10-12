@@ -5,8 +5,9 @@ localizeHtmlPage();
 
 export function makeTablePreview() {
   chrome.storage.sync.get(['users', 'settings'], storage => {
-    document.body.style.setProperty('--bg', storage.settings.dark ? "#171A1D" : "#FDFDFD");
-    document.body.style.setProperty('--color', storage.settings.dark ? "white" : "#555");
+    const settings = {...default_settings, ...storage.settings};
+    document.body.style.setProperty('--bg', settings.dark ? "#171A1D" : "#FDFDFD");
+    document.body.style.setProperty('--color', settings.dark ? "white" : "#555");
 
     // Ignore type coercion, want to match undefined and []
     if (storage.users != undefined) {  // Don't change first start page until an account has been added
@@ -28,7 +29,6 @@ export function makeTablePreview() {
         chrome.storage.sync.set({[storageName]: services}, makeTablePreview);
       }
 
-      const settings = {...default_settings, ...storage.settings};
       const existingTable = document.getElementsByClassName('grid-container')[0];
       existingTable.replaceWith(newTable);
 
