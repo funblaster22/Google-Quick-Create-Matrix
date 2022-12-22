@@ -15,7 +15,7 @@ export function makeTablePreview() {
         navigator.serviceWorker.controller?.postMessage({
           type: 'SAVE',
           url: chrome.runtime.getURL('popup.html'),
-          body: '<!DOCTYPE html>' + HEAD + `<style>body {--bg: ${storage.settings.dark ? "#171A1D" : "#FDFDFD"}; --color: ${storage.settings.dark ? "white" : "#555"}}</style>` + newTable.outerHTML
+          body: '<!DOCTYPE html>' + HEAD + `<style>body {--bg: ${settings.dark ? "#171A1D" : "#FDFDFD"}; --color: ${settings.dark ? "white" : "#555"}}</style>` + newTable.outerHTML
         });
       });
     }
