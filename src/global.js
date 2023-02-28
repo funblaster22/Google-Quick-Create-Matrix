@@ -57,7 +57,7 @@ export const default_settings = {
 };
 
 export const default_services = [
-  'account', 'doc', 'sheet', 'prez', 'draw', 'form', 'script', 'drive', 'gmail', 'cal', 'class', 'photo', 'hangouts', 'youtube'
+  'account', 'doc', 'sheet', 'prez', 'draw', 'form', 'script', 'drive', 'gmail', 'cal', 'class', 'photo', 'hangouts', 'youtube', 'colab',
 ];
 
 export const HEAD = '<head>' +
