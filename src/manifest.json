@@ -8,6 +8,10 @@
   "content_security_policy": {
     "extension_pages": "default-src 'self'; img-src 'self' https://lh3.googleusercontent.com; connect-src https://www.googleapis.com https://lh3.googleusercontent.com"
   },
+  "background": {
+    "service_worker": "background.js",
+    "type": "module"
+  },
   "action": {
     "default_popup": "popup.html",
     "default_icon": "icons/suite_38.png"
@@ -15,7 +19,11 @@
   "permissions": [
     "storage",
     "activeTab",
-    "identity"
+    "identity",
+    "scripting"
+  ],
+  "optional_host_permissions": [
+    "https://accounts.google.com/o/oauth2/*"
   ],
   "oauth2": {
     "client_id": "139485939671-1ekjjmo072r5capeenek67bvnsl8bit7.apps.googleusercontent.com",
