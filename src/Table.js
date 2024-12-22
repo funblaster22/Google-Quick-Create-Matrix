@@ -1,5 +1,5 @@
 import signin from './Signin.js';
-import {default_settings, default_services, onCellEnterExit} from "./global.js";
+import {default_settings, default_services, onCellEnterExit, app_icons} from "./global.js";
 
 /** @return {Promise<HTMLTableElement>}*/
 export default function makeTablePrefab(includeAll=false, includeSignin=true) {
@@ -7,27 +7,7 @@ export default function makeTablePrefab(includeAll=false, includeSignin=true) {
     chrome.storage.sync.get(['users', 'settings', 'services', 'userOrder'], storage => {
       const users = {...storage.users};
       const settings = {...default_settings, ...storage.settings};
-
-      /** @typedef {named & {link: string}} service */
-      /** @type {Object<string, Object<string, service>>} */
-      // TODO: currently, new service must be added here & global.js, unify
-      const apps_imgs = {
-        account: {name: 'account', link: "https://myaccount.google.com/u/??/", icon: settings.newIcons ? "icons/new/goog.svg" : "icons/old/goog-400.jpg"},
-        doc: {name: 'doc', link: "https://docs.google.com/document/u/??/create", icon: settings.newIcons ? "icons/new/docs.svg" : "icons/old/docs-32.png"},
-        sheet: {name: "sheet", link: "https://docs.google.com/spreadsheets/u/??/create", icon: settings.newIcons ? "icons/new/spreadsheets.svg" : "icons/old/spreadsheets-32.png"},
-        prez: {name: "prez", link: "https://docs.google.com/presentation/u/??/create", icon: settings.newIcons ? "icons/new/presentations.svg" : "icons/old/presentations-32.png"},
-        draw: {name: "draw", link: "https://docs.google.com/drawings/u/??/create", icon: settings.newIcons ? "icons/new/drawings.svg" : "icons/old/drawings-32.png"},
-        form: {name: "form", link: "https://docs.google.com/forms/u/??/create", icon: settings.newIcons ? "icons/new/forms.svg" : "icons/old/forms-32.png"},
-        script: {name: "script", link: "https://script.google.com/u/??/create", icon: `icons/${settings.newIcons ? 'new' : 'old'}/apps-script.svg`},
-        drive: {name: "drive", link: "https://drive.google.com/drive/u/??/my-drive", icon: settings.newIcons ? "icons/new/drive-48.png" : "icons/old/drive_icon.png"},
-        gmail: {name: "gmail", link: "https://mail.google.com/mail/u/??/#inbox", icon: `icons/${settings.newIcons ? 'new' : 'old'}/gmail.svg`},
-        class: {name: "class", link: "https://classroom.google.com/u/??/", icon: "icons/old/classroom.svg"},
-        cal: {name: "cal", link: "https://calendar.google.com/calendar/u/??/", icon: `icons/${settings.newIcons ? 'new' : 'old'}/calendar.svg`},
-        photo: {name: "photo", link: "https://photos.google.com/u/??/", icon: `icons/${settings.newIcons ? 'new' : 'old'}/photos.svg`},
-        hangouts: {name: "hangouts", link: "https://hangouts.google.com/??/", icon: "icons/old/hangouts.svg"},
-        youtube: {name: "youtube", link: "https://youtube.com", icon: "icons/old/youtube.svg"},  // unfortunately, there is no url to switch youtube accounts
-        colab: {name: "colab", link: "https://colab.research.google.com/?authuser=??", icon: "icons/new/colab.png"},
-      };
+      const apps_imgs = app_icons(settings.newIcons);
 
       let services = {};
       for (const service of storage.services ? new Set([...storage.services, ...default_services]) : default_services) {

@@ -51,14 +51,35 @@ export function resetSW() {
   });  // Remove precached table
 }
 
+/** @typedef {named & {link: string}} service */
+/** @function
+ * @arg {boolean} newIcons
+ * @return {Record<string, service>} */
+export const app_icons = newIcons => ({
+    account: {name: 'account', link: "https://myaccount.google.com/u/??/", icon: newIcons ? "icons/new/goog.svg" : "icons/old/goog-400.jpg"},
+    doc: {name: 'doc', link: "https://docs.google.com/document/u/??/create", icon: newIcons ? "icons/new/docs.svg" : "icons/old/docs-32.png"},
+    sheet: {name: "sheet", link: "https://docs.google.com/spreadsheets/u/??/create", icon: newIcons ? "icons/new/spreadsheets.svg" : "icons/old/spreadsheets-32.png"},
+    prez: {name: "prez", link: "https://docs.google.com/presentation/u/??/create", icon: newIcons ? "icons/new/presentations.svg" : "icons/old/presentations-32.png"},
+    draw: {name: "draw", link: "https://docs.google.com/drawings/u/??/create", icon: newIcons ? "icons/new/drawings.svg" : "icons/old/drawings-32.png"},
+    form: {name: "form", link: "https://docs.google.com/forms/u/??/create", icon: newIcons ? "icons/new/forms.svg" : "icons/old/forms-32.png"},
+    script: {name: "script", link: "https://script.google.com/u/??/create", icon: `icons/${newIcons ? 'new' : 'old'}/apps-script.svg`},
+    drive: {name: "drive", link: "https://drive.google.com/drive/u/??/my-drive", icon: newIcons ? "icons/new/drive-48.png" : "icons/old/drive_icon.png"},
+    gmail: {name: "gmail", link: "https://mail.google.com/mail/u/??/#inbox", icon: `icons/${newIcons ? 'new' : 'old'}/gmail.svg`},
+    class: {name: "class", link: "https://classroom.google.com/u/??/", icon: "icons/old/classroom.svg"},
+    cal: {name: "cal", link: "https://calendar.google.com/calendar/u/??/", icon: `icons/${newIcons ? 'new' : 'old'}/calendar.svg`},
+    photo: {name: "photo", link: "https://photos.google.com/u/??/", icon: `icons/${newIcons ? 'new' : 'old'}/photos.svg`},
+    hangouts: {name: "hangouts", link: "https://hangouts.google.com/??/", icon: "icons/old/hangouts.svg"},
+    youtube: {name: "youtube", link: "https://youtube.com", icon: "icons/old/youtube.svg"},  // unfortunately, there is no url to switch youtube accounts
+    colab: {name: "colab", link: "https://colab.research.google.com/?authuser=??", icon: "icons/new/colab.png"},
+    contacts: {name: "contacts", link: "https://contacts.google.com/u/??/", icon: `icons/${newIcons ? 'new' : 'old'}/contacts.png`},
+  });
+
 export const default_settings = {
   doc: true, sheet: true, prez: true, draw: true, form: true,
   invert: true, newIcons: true, useBottom: true, dark: false,
 };
 
-export const default_services = [
-  'account', 'doc', 'sheet', 'prez', 'draw', 'form', 'script', 'drive', 'gmail', 'cal', 'class', 'photo', 'hangouts', 'youtube', 'colab',
-];
+export const default_services = Object.keys(app_icons(false));
 
 export const HEAD = '<head>' +
   '<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />' +
