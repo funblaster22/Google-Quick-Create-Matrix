@@ -28,7 +28,7 @@ export default function makeTablePrefab(includeAll=false, includeSignin=true) {
       console.log(usersSorted, settings, services);
       /** @typedef {named & {email: string, ID: number}} user */
       if (includeSignin)
-        usersSorted.signin = {name: "signin", icon: 'icons/signin-32.png'};
+        usersSorted.signin = {name: "signin", icon: '/icons/signin-32.png'};
       const newTable = generateTable(services, usersSorted, settings);
       if (settings.useBottom) {
         newTable.style.gridTemplateAreas = '"sideHeader body" ". topHeader"';
