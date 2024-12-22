@@ -61,3 +61,12 @@ footer {
 .even-columns > * {
     width: 300px;
 }
+
+
+/* 2nd page */
+#services {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 1rem;
+}
