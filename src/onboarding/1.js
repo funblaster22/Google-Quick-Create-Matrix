@@ -1,4 +1,6 @@
 import "../options.js";
+import {localizeHtmlPage} from "../global.js";
+import {makeTablePreview} from "../options.js";
 
 function autoConnect() {
   chrome.permissions.request({origins: ["https://accounts.google.com/o/oauth2/*"]});
@@ -26,4 +28,6 @@ function generateAccounts() {
   });
 }
 
+localizeHtmlPage();
 generateAccounts();
+makeTablePreview();

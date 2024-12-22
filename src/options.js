@@ -1,8 +1,6 @@
 import generateTable from "./Table.js";
 import {default_settings, localizeHtmlPage, HEAD, resetSW} from "./global.js";
 
-localizeHtmlPage();
-
 export function makeTablePreview() {
   chrome.storage.sync.get(['users', 'settings'], storage => {
     const settings = {...default_settings, ...storage.settings};
@@ -21,47 +19,30 @@ export function makeTablePreview() {
     }
 
     generateTable(true).then(newTable => {
-      function saveNewState(selector, storageName) {
-        const services = [];
-        for (const checkbox of document.querySelectorAll(`.${selector} input[type=checkbox]`)) {
-          services.push(checkbox.name);
-        }
-        chrome.storage.sync.set({[storageName]: services}, makeTablePreview);
-      }
+      if (location.pathname === '/options.html') {
+        const existingTable = document.getElementsByClassName('grid-container')[0];
+        existingTable?.replaceWith(newTable);
 
-      const existingTable = document.getElementsByClassName('grid-container')[0];
-      existingTable?.replaceWith(newTable);
+        // Remove links from table
+        for (const link of document.querySelectorAll('.grid-container a'))
+          link.removeAttribute('href');
 
-      // Remove links from table
-      for (const link of document.querySelectorAll('.grid-container a'))
-        link.removeAttribute('href');
-
-      // Make icons draggable
-      const selector = settings.invert ? 'sideHeader' : 'topHeader';
-      let sortme = document.getElementsByClassName(selector)[0];
-      if (sortme)
-        new Sortable(sortme, {
+        // Make icons draggable
+        const selector = settings.invert ? 'sideHeader' : 'topHeader';
+        new Sortable(document.getElementsByClassName(selector)[0], {
           animation: 150,
           ghostClass: "sortable-ghost", //somehow find a way to not show icon without being weird
           onEnd: saveNewState.bind(this, selector, 'services')
-          /*() => {
-            const services = [];
-            for (const checkbox of document.querySelectorAll(`.${selector} input[type=checkbox]`)) {
-              services.push(checkbox.name);
-            }
-            chrome.storage.sync.set({services: services}, makeTablePreview);
-          }*/
         });
 
-      // Make user icons draggable
-      const selector2 = settings.invert ? 'topHeader' : 'sideHeader';
-      sortme = document.getElementsByClassName(selector2)[0]
-      if (sortme)
-        new Sortable(sortme, {
+        // Make user icons draggable
+        const selector2 = settings.invert ? 'topHeader' : 'sideHeader';
+        new Sortable(document.getElementsByClassName(selector2)[0], {
           animation: 150,
           ghostClass: "sortable-ghost", //somehow find a way to not show icon without being weird
           onEnd: saveNewState.bind(this, selector2, 'userOrder')
         });
+      }
 
       // Add event listeners to radio buttons
       for (const input of document.getElementsByTagName('input')) {
@@ -72,6 +53,13 @@ export function makeTablePreview() {
   });
 }
 
+export function saveNewState(selector, storageName) {
+  const services = [];
+  for (const checkbox of document.querySelectorAll(`.${selector} input[type=checkbox]`)) {
+    services.push(checkbox.name);
+  }
+  chrome.storage.sync.set({[storageName]: services}, makeTablePreview);
+}
 
 function updateSettings(ev) {
   const target = ev.target;
@@ -88,15 +76,17 @@ function updateSettings(ev) {
   });
 }
 
+if (location.pathname === '/options.html') {
+  localizeHtmlPage();
+  makeTablePreview();
 
-makeTablePreview();
-
-document.getElementById('signout')?.addEventListener("click", () =>
-  chrome.storage.sync.remove(['users', 'userOrder'], () => {
-    makeTablePreview();
-    resetSW();
-  })
-);
-document.getElementById('reset')?.addEventListener("click", () =>
-  chrome.storage.sync.remove(['settings', 'services'], makeTablePreview)
-);
+  document.getElementById('signout').addEventListener("click", () =>
+    chrome.storage.sync.remove(['users', 'userOrder'], () => {
+      makeTablePreview();
+      resetSW();
+    })
+  );
+  document.getElementById('reset').addEventListener("click", () =>
+    chrome.storage.sync.remove(['settings', 'services'], makeTablePreview)
+  );
+}
