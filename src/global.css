@@ -2,7 +2,7 @@ body {
     /* Default vars */
     --bg: #FDFDFD;
     --color: #555;
-    
+
 	font-family: Arial, sans-serif;
 	color: var(--color);
 	margin: 0;
@@ -87,7 +87,7 @@ td > a:hover::before {
     position: absolute;
 }
 
-.col-1 input[type=checkbox], .row-1 input[type=checkbox] {
+.col-1 input[type=checkbox], .row-1 input[type=checkbox], .checkbox-img {
 	appearance: unset;
 	width: 32px;
 	height: 32px;

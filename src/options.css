@@ -3,10 +3,6 @@
     max-width: 700px;
 }
 
-body {
-    margin: revert;
-}
-
 button {
     font-size: inherit;
 }
@@ -23,11 +19,11 @@ p {
     visibility: hidden;
 }
 
-.col-1 input[type=checkbox], .row-1 input[type=checkbox] {
+.col-1 input[type=checkbox], .row-1 input[type=checkbox], .checkbox-img {
     filter: grayscale(1);
     cursor: grab;
 }
 
-.col-1 input[type=checkbox]:checked, .row-1 input[type=checkbox]:checked {
+.col-1 input[type=checkbox]:checked, .row-1 input[type=checkbox]:checked, .checkbox-img:checked {
     filter: grayscale(0);
 }

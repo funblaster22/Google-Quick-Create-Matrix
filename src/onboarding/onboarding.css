@@ -30,6 +30,10 @@ h1, h2, h3 {
     flex-wrap: wrap;
 }
 
+.account {
+    height: 50px;
+}
+
 .theme {
     position: absolute;
     left: 1rem;
@@ -40,4 +44,20 @@ footer {
     position: absolute;
     right: 1rem;
     bottom: 1rem;
+}
+
+.checkbox-img {
+    width: 50px !important;
+    height: 50px !important;
+    margin-right: 0.25rem !important;
+    float: left;
+}
+
+.even-columns {
+    display: flex;
+    gap: 1rem;
+}
+
+.even-columns > * {
+    width: 300px;
 }

@@ -3,6 +3,8 @@
 <head>
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="stylesheet" href="./onboarding.css" type="text/css" />
+    <link rel="stylesheet" href="../global.css" type="text/css" />
+    <link rel="stylesheet" href="../options.css" type="text/css" />
     <script src="onboarding.js" type="module"></script>
     <title>__MSG_title__ Onboarding</title>
 </head>
@@ -14,9 +16,9 @@
         </label>
         <h1>Welcome! Add your accounts to get up and running!</h1>
         <h3>Add accounts in the order they appear on Google. You can edit this later.</h3>
-        <div style="display: flex; gap: 1rem;">
-            <div style="width: 300px; height: 300px; background: red"></div>
-            <div class="accounts">
+        <div class="even-columns">
+            <div style="height: 300px; background: red"></div>
+            <div id="accounts">
                 <button style="width: 100%">Auto-connect accounts</button>
                 <button style="width: 50%">Log in</button>
                 <button style="width: 50%">Add manually</button>
