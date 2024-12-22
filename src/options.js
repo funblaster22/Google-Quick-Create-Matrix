@@ -30,7 +30,7 @@ export function makeTablePreview() {
       }
 
       const existingTable = document.getElementsByClassName('grid-container')[0];
-      existingTable.replaceWith(newTable);
+      existingTable?.replaceWith(newTable);
 
       // Remove links from table
       for (const link of document.querySelectorAll('.grid-container a'))
@@ -38,26 +38,30 @@ export function makeTablePreview() {
 
       // Make icons draggable
       const selector = settings.invert ? 'sideHeader' : 'topHeader';
-      new Sortable(document.getElementsByClassName(selector)[0], {
-        animation: 150,
-        ghostClass: "sortable-ghost", //somehow find a way to not show icon without being weird
-        onEnd: saveNewState.bind(this, selector, 'services')
-        /*() => {
-          const services = [];
-          for (const checkbox of document.querySelectorAll(`.${selector} input[type=checkbox]`)) {
-            services.push(checkbox.name);
-          }
-          chrome.storage.sync.set({services: services}, makeTablePreview);
-        }*/
-      });
+      let sortme = document.getElementsByClassName(selector)[0];
+      if (sortme)
+        new Sortable(sortme, {
+          animation: 150,
+          ghostClass: "sortable-ghost", //somehow find a way to not show icon without being weird
+          onEnd: saveNewState.bind(this, selector, 'services')
+          /*() => {
+            const services = [];
+            for (const checkbox of document.querySelectorAll(`.${selector} input[type=checkbox]`)) {
+              services.push(checkbox.name);
+            }
+            chrome.storage.sync.set({services: services}, makeTablePreview);
+          }*/
+        });
 
       // Make user icons draggable
       const selector2 = settings.invert ? 'topHeader' : 'sideHeader';
-      new Sortable(document.getElementsByClassName(selector2)[0], {
-        animation: 150,
-        ghostClass: "sortable-ghost", //somehow find a way to not show icon without being weird
-        onEnd: saveNewState.bind(this, selector2, 'userOrder')
-      });
+      sortme = document.getElementsByClassName(selector2)[0]
+      if (sortme)
+        new Sortable(sortme, {
+          animation: 150,
+          ghostClass: "sortable-ghost", //somehow find a way to not show icon without being weird
+          onEnd: saveNewState.bind(this, selector2, 'userOrder')
+        });
 
       // Add event listeners to radio buttons
       for (const input of document.getElementsByTagName('input')) {
@@ -87,8 +91,12 @@ function updateSettings(ev) {
 
 makeTablePreview();
 
-document.getElementById('signout').onclick = () => chrome.storage.sync.remove(['users', 'userOrder'], () => {
-  makeTablePreview();
-  resetSW();
-});
-document.getElementById('reset').onclick = () => chrome.storage.sync.remove(['settings', 'services'], makeTablePreview);
+document.getElementById('signout')?.addEventListener("click", () =>
+  chrome.storage.sync.remove(['users', 'userOrder'], () => {
+    makeTablePreview();
+    resetSW();
+  })
+);
+document.getElementById('reset')?.addEventListener("click", () =>
+  chrome.storage.sync.remove(['settings', 'services'], makeTablePreview)
+);

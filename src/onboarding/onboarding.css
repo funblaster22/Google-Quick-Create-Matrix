@@ -1,0 +1,43 @@
+html, body {
+    padding: 0;
+    margin: 0;
+    font-family: sans-serif;
+    color: var(--color);
+    background: var(--bg);
+}
+
+main {
+    width: 100vw;
+    height: 100vh;
+    max-width: 1000px;
+    margin: auto;
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+
+h1, h2, h3 {
+    text-align: center;
+}
+
+.accounts {
+    width: 300px;
+    height: fit-content;
+    overflow: hidden;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.theme {
+    position: absolute;
+    left: 1rem;
+    top: 1rem;
+}
+
+footer {
+    position: absolute;
+    right: 1rem;
+    bottom: 1rem;
+}
