@@ -16,7 +16,7 @@ chrome.storage.sync.get('version', storage => {
     return parseInt(ver.split('.')[0]);
   }
 
-  let dataVersion = storage.version || 0;
+  let dataVersion = storage.version || appVersion;
   const appVersion = parseSemver(chrome.runtime.getManifest().version);
   const needsUpdate = dataVersion < appVersion;
   if (appVersion < dataVersion) {
@@ -24,22 +24,19 @@ chrome.storage.sync.get('version', storage => {
     throw new Error("OOF");
   }
 
-  while (dataVersion < appVersion) {
-    switch (dataVersion) {
-      case 1:
-        chrome.storage.sync.remove(['users', 'userOrder'], () => {
-          resetSW();
-          alert("Update complete! You need to sign in to your accounts again");
-        });
-        break;
-      default:
-        console.log("Nothing to do for version", dataVersion);
-    }
-    dataVersion++;
+  // don't break to allow for multiple updates
+  switch (dataVersion) {
+    case 1:
+      chrome.storage.sync.remove(['users', 'userOrder'], () => {
+        resetSW();
+        alert("Update complete! You need to sign in to your accounts again");
+      });
+    case 2:
+      alert("Update complete! Google contacts and new onboarding experience added");
   }
   console.log("Update check finished");
   if (needsUpdate)
-    chrome.storage.sync.set({version: dataVersion}, location.reload);
+    chrome.storage.sync.set({version: appVersion}, location.reload);
 })
 
 chrome.runtime.setUninstallURL("https://docs.google.com/forms/d/e/1FAIpQLSfSW9ba4_vDMCL_P2V5XkPDKp5xo648zQHqIAB91eMz1PALew/viewform?usp=sf_link");
