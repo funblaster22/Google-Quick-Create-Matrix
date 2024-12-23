@@ -56,6 +56,7 @@ export function makeTablePreview() {
 export function saveNewState(selector, storageName) {
   const services = [];
   for (const checkbox of document.querySelectorAll(`.${selector} input[type=checkbox]`)) {
+    if (checkbox.name === "signin") continue;
     services.push(checkbox.name);
   }
   chrome.storage.sync.set({[storageName]: services}, makeTablePreview);
