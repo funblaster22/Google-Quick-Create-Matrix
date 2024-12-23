@@ -51,14 +51,12 @@ export function makeCell(td, rowData, colData, position) {
   console.log(rowData, colData);
   const link = document.createElement('a');
   if (rowData.name === "signin") {
-    link.setAttribute('onclick', "")
     link.onclick = signin;
   } else {
     link.classList.add("launch");
     link.target = "_blank";
     link.href = colData.link.replace('??', rowData.ID.toString());
   }
-  const directions = [[-1, -1, "nw"], [1, -1, "ne"], [1, 1, "se"], [-1, 1, "sw"]];
   td.onmouseenter = onCellEnterExit.bind(td, position, true);
   td.onmouseleave = onCellEnterExit.bind(td, position, false);
   td.appendChild(link);
