@@ -84,5 +84,29 @@
   },
   "setting_dark": {
     "message": "Dark theme"
+  },
+  "onboarding1_heading": {
+    "message": "Welcome! Add your accounts to get up and running!"
+  },
+  "onboarding1_subheading": {
+    "message": "Add accounts in the order they appear on Google. You can edit this later."
+  },
+  "onboarding2_heading": {
+    "message": "Select which services you regularly use across accounts"
+  },
+  "onboarding2_subheading": {
+    "message": "Click to enable/disable, drag to reorder"
+  },
+  "onboarding3_heading": {
+    "message": "You're done!"
+  },
+  "onboarding3_pin_instructions": {
+    "message": "To use, pin the extension"
+  },
+  "onboarding3_usage_instructions": {
+    "message": "To open, for example, APP in the 2nd profile, click the extension icon then click the square where they intersect"
+  },
+  "onboarding3_tryit": {
+    "message": "Try it out!"
   }
 }
