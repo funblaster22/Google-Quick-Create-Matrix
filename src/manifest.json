@@ -1,14 +1,20 @@
 {
   "manifest_version": 3,
   "name" : "__MSG_title__",
-  "version": "3.0.0",
+  "version": "3.0.1",
   "description": "__MSG_description__",
   "default_locale": "en",
+  "browser_specific_settings": {
+    "gecko": {
+      "id": "gapp-matrix@ethandawes.dev"
+    }
+  },
   "key": "MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEA8teux8xd0wbuSACNRvXubwH9HKCMSbNuZvPCNQ7sBZGR/6nZD2W/TUUkI+tS8z946ytbbhLLURDkTCs1kc9ZQc3qdCchMDHhLH5rbI+Iimz0vtG61TtCvrZKTYF6zn9IJe+lQ/QLUCI3s57P+mxvGeguxQ8xGZFTwfJ9OjCqWtvGoL7DlpjgCjv5MgFK0Emyuom5F3J0VO5DVP9sBZynmEkNkYQCr1espjSPNrOz6i4BiXh/PTJKbzXusnK2ydRY2R7x4sgBusWVhXIaGNPJECaAii9mpaAPAq6cS0bhpROdSELOG3Q2V2ud4KmOL0z7x32NByy2/8M1k8Rx5G2nBwIDAQAB",
   "content_security_policy": {
     "extension_pages": "default-src 'self'; img-src 'self' https://lh3.googleusercontent.com data:; connect-src https://www.googleapis.com https://lh3.googleusercontent.com; style-src 'unsafe-inline'"
   },
   "background": {
+    "scripts": ["sw.js"],
     "service_worker": "sw.js"
   },
   "action": {
