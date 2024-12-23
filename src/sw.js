@@ -71,6 +71,12 @@ self.addEventListener('fetch', event => {
     return;
   }
 
+  // if ends with .mp4, always fetch. For some reason, must be outside `respondWith`
+  if (request.url.endsWith('.mp4')) {
+    console.log("Fetching " + request.url);
+    return fetch(request);
+  }
+
   event.respondWith(async function () {
     const cache = await caches.open(CACHE_NAME);
 
