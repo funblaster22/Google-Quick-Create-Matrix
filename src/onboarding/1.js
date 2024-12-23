@@ -3,9 +3,12 @@ import {localizeHtmlPage} from "../global.js";
 import {makeTablePreview} from "../options.js";
 import signin from "../Signin.js";
 
-window.autoConnect = () => {
-  chrome.permissions.request({origins: ["https://accounts.google.com/o/oauth2/*"]});
+async function autoConnect() {
+  const granted = await chrome.permissions.request({origins: ["https://accounts.google.com/o/oauth2/*"]});
+  loginOne();
 }
+
+const loginOne = () => signin().then(generateAccounts);
 
 function generateAccounts() {
   chrome.storage.sync.get(['users', 'userOrder'], storage => {
@@ -44,12 +47,69 @@ function generateAccounts() {
       });
     }
 
-    document.getElementById('login').addEventListener('click', () => {
-      signin().then(generateAccounts);
+    document.getElementById('login').addEventListener('click', loginOne);
+
+    document.getElementById('auto-connect')?.addEventListener('click', autoConnect);
+
+    document.getElementById('manual-add').addEventListener('click', () => {
+      // open file picker
+      const input = document.createElement('input');
+      input.type = 'file';
+      input.accept = 'image/*';
+      input.onchange = (event) => {
+        /** @type {File} */
+        const file = event.target.files[0];
+        if (file) {
+          // convert to base64 uri
+          const reader = new FileReader();
+          reader.readAsDataURL(file);
+          reader.onloadend = async () => {
+            const icon = await scaleImg(reader.result);
+            const name = "user account";
+            const email = "account" + Math.round(Math.random() * 1000);
+            const ID = userOrder.length;
+            users[email] = {name: name, email: email, ID: ID, icon: icon};
+            userOrder.push(email);
+            const settings = (await chrome.storage.sync.get(['settings'])).settings || {};
+            settings[email] = true;
+            try {
+              await chrome.storage.sync.set({users: users, userOrder: userOrder, settings});
+            } catch (e) {
+              alert("Cannot add any more manual accounts.");
+            }
+            generateAccounts();
+          }
+        }
+      };
+      input.click();
     });
+
+    // for checking/unchecking accounts
+    makeTablePreview();
+  });
+}
+
+/**
+ * Scales an image to 50x50 pixels
+ * @param {string} imgUri - the base64 uri to scale
+ * @returns {Promise<string>} - the base64 uri of the scaled image
+ */
+function scaleImg(imgUri) {
+  const img = new Image();
+  img.src = imgUri;
+  return new Promise(resolve => {
+    img.onload = () => {
+      const canvas = document.createElement('canvas');
+      // document.body.appendChild(img);
+      // document.body.appendChild(canvas);
+      const ctx = canvas.getContext('2d');
+      canvas.width = 50;
+      canvas.height = 50;
+      ctx.drawImage(img, 0, 0, 50, 50);
+      resolve(canvas.toDataURL("image/webp"));
+    }
   });
 }
 
 localizeHtmlPage();
 generateAccounts();
-makeTablePreview();
