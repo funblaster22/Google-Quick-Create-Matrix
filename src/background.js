@@ -15,3 +15,9 @@ chrome.permissions.onRemoved.addListener(permission => {
   console.log("permission removed", permission);
   chrome.scripting.unregisterContentScripts({ ids: [getAccountScript] })
 });
+
+chrome.runtime.onInstalled.addListener((details) => {
+  if (details.reason === "install") {
+    chrome.tabs.create({ url: "/onboarding/1.html" }); // Replace with your desired page
+  }
+});
