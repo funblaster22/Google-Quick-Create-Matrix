@@ -4,6 +4,8 @@ html, body {
     font-family: sans-serif;
     color: var(--color);
     background: var(--bg);
+    width: unset !important;
+    max-width: unset !important;
 }
 
 main {
