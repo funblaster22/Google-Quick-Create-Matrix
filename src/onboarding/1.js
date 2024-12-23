@@ -4,11 +4,17 @@ import {makeTablePreview} from "../options.js";
 import signin from "../Signin.js";
 
 async function autoConnect() {
-  const granted = await chrome.permissions.request({origins: ["https://accounts.google.com/o/oauth2/*"]});
-  loginOne();
+  const origins = ["https://accounts.google.com/o/oauth2/*"];
+  const granted = await chrome.permissions.request({origins});
+  if (!granted) {
+    alert("Permission denied. Please try again.");
+    return;
+  }
+  await loginOne();
+  await chrome.permissions.remove({origins});
 }
 
-const loginOne = () => signin().then(generateAccounts);
+const loginOne = () => signin().then(generateAccounts).catch(generateAccounts);
 
 function generateAccounts() {
   chrome.storage.sync.get(['users', 'userOrder'], storage => {

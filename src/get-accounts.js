@@ -1,29 +1,30 @@
 const profileImgs = document.getElementsByTagName("img");
 const profileNames = document.querySelectorAll("[data-email]");
 
-const settings = await chrome.storage.sync.get(["settings", "userOrder", "users"]);
-if (!settings.settings) settings.settings = {};
-if (!settings.userOrder) settings.userOrder = [];
-if (!settings.users) settings.users = {};
+chrome.storage.sync.get(["settings", "userOrder", "users"], storage => {
+  if (!storage.settings) storage.settings = {};
+  if (!storage.userOrder) storage.userOrder = [];
+  if (!storage.users) storage.users = {};
 
-for (let i = 0; i < profileImgs.length; i++) {
-  const profileImg = profileImgs[i].src;
-  const profileName = profileNames[i].data.email;
+  for (let i = 0; i < profileImgs.length; i++) {
+    const profileImg = profileImgs[i].src;
+    const profileName = profileNames[i].dataset.email;
 
-  settings.users[profileName] = {
-    ID: i,
-    email: profileName,
-    name: profileName,
-    icon: profileImg,
+    storage.users[profileName] = {
+      ID: i,
+      email: profileName,
+      name: profileName,
+      icon: profileImg,
+    }
+    storage.settings[profileName] = true;
+    if (!storage.userOrder.includes(profileName))
+      storage.userOrder.push(profileName);
   }
-  settings.settings[profileName] = true;
-  if (!settings.userOrder.includes(profileName))
-    settings.userOrder.push(profileName);
-}
 
-try {
-  chrome.storage.sync.set(settings);
-  window.close();
-} catch {
-  alert("Could not automatically set accounts, please proceed manually");
-}
+  try {
+    chrome.storage.sync.set(storage);
+    window.close();
+  } catch {
+    alert("Could not automatically set accounts, please proceed manually");
+  }
+});
