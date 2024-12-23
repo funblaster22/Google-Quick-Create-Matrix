@@ -1,3 +1,8 @@
+// Firefox extension pages do not have access to service worker or ability to register one :/
+// This polyfill at least stops errors
+if ('serviceWorker' in navigator === false)
+  navigator.serviceWorker = {};
+
 // Code to migrate stored data when updating
 chrome.storage.sync.get('version', storage => {
   function parseSemver(ver) {
