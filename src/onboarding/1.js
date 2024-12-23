@@ -53,6 +53,16 @@ function generateAccounts() {
       });
     }
 
+    for (const idInput of document.querySelectorAll('input[type=number]')) {
+      idInput.addEventListener('change', async () => {
+        const email = idInput.dataset.email;
+        const user = users[email];
+        user.ID = parseInt(idInput.value);
+        await chrome.storage.sync.set({users: users});
+        generateAccounts();
+      });
+    }
+
     document.getElementById('login').addEventListener('click', loginOne);
 
     document.getElementById('auto-connect')?.addEventListener('click', autoConnect);
