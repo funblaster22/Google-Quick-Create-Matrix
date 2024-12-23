@@ -1,15 +1,3 @@
-// TODO: might be inefficient, but probably imperceptible
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('/sw.js')
-      .then(registration => {
-        console.log('ServiceWorker registered')
-      }, err => {
-        console.error('ServiceWorker registration failed:', err)
-      });
-  });
-}
-
 // Code to migrate stored data when updating
 chrome.storage.sync.get('version', storage => {
   function parseSemver(ver) {

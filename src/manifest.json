@@ -9,8 +9,7 @@
     "extension_pages": "default-src 'self'; img-src 'self' https://lh3.googleusercontent.com data:; connect-src https://www.googleapis.com https://lh3.googleusercontent.com; style-src 'unsafe-inline'"
   },
   "background": {
-    "service_worker": "background.js",
-    "type": "module"
+    "service_worker": "sw.js"
   },
   "action": {
     "default_popup": "popup.html",
