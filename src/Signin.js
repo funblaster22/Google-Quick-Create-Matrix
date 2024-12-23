@@ -79,8 +79,9 @@ export default async function signin() {
   console.log(user);
   const storage = await chrome.storage.sync.get(['users', 'userOrder', 'settings']);
   const users = {...storage.users};  // Use spread operator in case userOrder is undefined, guarantees an object, DOES NOT WORK with arrays
-  //const max = Math.max(0, ...Object.keys(users).map(item => Number.parseInt(item))); //use if IDs can be skipped is added (eg. users 0, 1, and 3)
-  users[user.email] = {name: user.email, email: user.email, ID: Object.keys(users).length, icon: user.picture};
+  if (user.email in users) return;  // user already exists
+  const maxId = Math.max(-1, ...Object.values(users).map(item => item.ID));  // use b/c IDs can be skipped (eg. users 0, 1, and 3)
+  users[user.email] = {name: user.email, email: user.email, ID: maxId + 1, icon: user.picture};
   await chrome.storage.sync.set({
     users: users,
     userOrder: [...(storage.userOrder || []), user.email],
