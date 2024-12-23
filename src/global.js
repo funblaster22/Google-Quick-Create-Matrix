@@ -16,8 +16,8 @@ chrome.storage.sync.get('version', storage => {
     return parseInt(ver.split('.')[0]);
   }
 
-  let dataVersion = storage.version || appVersion;
   const appVersion = parseSemver(chrome.runtime.getManifest().version);
+  let dataVersion = storage.version || appVersion;
   const needsUpdate = dataVersion < appVersion;
   if (appVersion < dataVersion) {
     alert("Please update the extension, the data is stored in a format that is not compatible with the current version");
