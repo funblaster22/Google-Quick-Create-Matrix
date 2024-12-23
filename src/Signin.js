@@ -33,9 +33,13 @@ function getDetails(token) {
 // Alternate: https://github.com/michaeloryl/oauth2-angularjs-chrome-extension-demo
 // Official docs: https://developers.google.com/identity/protocols/oauth2/javascript-implicit-flow#oauth-2.0-endpoints
 function getAuthToken() {
-  const CLIENT_ID = encodeURIComponent('139485939671-6l2snujbfuvv87og8j6c5q0hb38qumr1.apps.googleusercontent.com');
+  const isChromium = typeof browser === 'undefined';
+  const CLIENT_ID = encodeURIComponent(
+    isChromium ? '139485939671-6l2snujbfuvv87og8j6c5q0hb38qumr1.apps.googleusercontent.com'
+      : "139485939671-lhbo35irrq9c8v528l3qrl9ps0net5n9.apps.googleusercontent.com"
+  );
   const RESPONSE_TYPE = encodeURIComponent('token');
-  const REDIRECT_URI = encodeURIComponent('https://' + chrome.i18n.getMessage('@@extension_id') + '.chromiumapp.org/')
+  const REDIRECT_URI = encodeURIComponent(chrome.identity.getRedirectURL())
   const SCOPE = encodeURIComponent('https://www.googleapis.com/auth/userinfo.email');
   const STATE = encodeURIComponent('meet' + Math.random().toString(36).substring(2, 15));
   const PROMPT = encodeURIComponent('consent');
@@ -50,29 +54,22 @@ function getAuthToken() {
 &redirect_uri=${REDIRECT_URI}
 &scope=${SCOPE}
 &state=${STATE}
-&prompt=${PROMPT}`;
+&prompt=${PROMPT}`.replaceAll("\n", "");
 
     console.log(openId_endpoint_url);
     return openId_endpoint_url;
   }
 
-  return new Promise((res, rej) => {
-    chrome.identity.launchWebAuthFlow({
+  return chrome.identity.launchWebAuthFlow({
       'url': create_auth_endpoint(),
       'interactive': true
-    }, function (redirect_url) {
-      if (chrome.runtime.lastError) {
-        // problem signing in
-        rej(chrome.runtime.lastError);
-      } else {
-        console.log(redirect_url);
-        let id_token = redirect_url.substring(redirect_url.indexOf('access_token=') + 13);
-        id_token = id_token.substring(0, id_token.indexOf('&'));
-        console.log("User successfully signed in.", id_token);
-        res(id_token)
-      }
+    }).then(redirect_url => {
+      console.log(redirect_url);
+      let id_token = redirect_url.substring(redirect_url.indexOf('access_token=') + 13);
+      id_token = id_token.substring(0, id_token.indexOf('&'));
+      console.log("User successfully signed in.", id_token);
+      return id_token;
     });
-  });
 }
 
 
