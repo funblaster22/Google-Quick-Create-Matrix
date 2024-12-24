@@ -19,7 +19,7 @@ export function makeTablePreview() {
     }
 
     generateTable(true).then(newTable => {
-      if (!location.pathname.startsWith('/onboarding')) {
+      if (location.pathname === '/options.html') {
         const existingTable = document.getElementsByClassName('grid-container')[0];
         existingTable?.replaceWith(newTable);
 
@@ -77,7 +77,7 @@ function updateSettings(ev) {
   });
 }
 
-if (!location.pathname.startsWith('/onboarding')) {
+if (location.pathname === '/options.html') {
   localizeHtmlPage();
   makeTablePreview();
 

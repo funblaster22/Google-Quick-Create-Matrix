@@ -1,6 +1,6 @@
 // Firefox extension pages do not have access to service worker or ability to register one :/
 // This polyfill at least stops errors
-if ('serviceWorker' in navigator === false)
+if (!('serviceWorker' in navigator))
   navigator.serviceWorker = {};
 
 // Code to migrate stored data when updating
